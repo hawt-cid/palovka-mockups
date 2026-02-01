@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="cs" data-theme="retro">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard - Adventní Kalendář</title>
+  <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.14/dist/full.min.css" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="min-h-screen flex bg-base-100">
+
+  <!-- Sidebar -->
+  <aside class="w-64 bg-base-200 border-r border-base-300 hidden lg:flex flex-col">
+    <div class="p-4 border-b border-base-300">
+      <a href="../index.html" class="flex items-center gap-2 text-xl font-bold">
+        <span class="text-2xl">🎄</span>
+        <span>Admin</span>
+      </a>
+    </div>
+    <ul class="menu p-4 flex-1">
+      <li><a href="dashboard.html" class="active font-semibold">📊 Dashboard</a></li>
+      <li><a href="years.html">📅 Ročníky</a></li>
+      <li><a href="users.html">👥 Uživatelé</a></li>
+      <li><a href="houses.html">🏠 Domy</a></li>
+      <li><a href="import.html">📥 Import adres</a></li>
+      <li><a href="invite.html">✉️ Pozvat</a></li>
+      <li><a href="photos.html">📷 Fotky</a></li>
+      <div class="divider"></div>
+      <li><a href="../index.html">← Zpět na web</a></li>
+    </ul>
+    <div class="p-4 border-t border-base-300">
+      <div class="flex items-center gap-3">
+        <div class="avatar placeholder">
+          <div class="bg-primary text-primary-content rounded-full w-10">
+            <span class="text-sm">A</span>
+          </div>
+        </div>
+        <div class="flex-1 min-w-0">
+          <p class="font-semibold truncate">Admin</p>
+          <p class="text-xs text-base-content/60 truncate">admin@palova.cz</p>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <div class="flex-1 flex flex-col">
+
+    <!-- Top Bar (mobile) -->
+    <div class="navbar bg-base-200 border-b border-base-300 lg:hidden">
+      <div class="navbar-start">
+        <div class="dropdown">
+          <div tabindex="0" role="button" class="btn btn-ghost">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h8m-8 6h16" />
+            </svg>
+          </div>
+          <ul tabindex="0" class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
+            <li><a href="dashboard.html" class="active">📊 Dashboard</a></li>
+            <li><a href="years.html">📅 Ročníky</a></li>
+            <li><a href="users.html">👥 Uživatelé</a></li>
+            <li><a href="houses.html">🏠 Domy</a></li>
+            <li><a href="import.html">📥 Import</a></li>
+            <li><a href="invite.html">✉️ Pozvat</a></li>
+            <li><a href="photos.html">📷 Fotky</a></li>
+            <div class="divider"></div>
+            <li><a href="../index.html">← Zpět</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="navbar-center">
+        <span class="text-xl font-bold">Admin Dashboard</span>
+      </div>
+      <div class="navbar-end">
+        <div class="avatar placeholder">
+          <div class="bg-primary text-primary-content rounded-full w-8">
+            <span class="text-xs">A</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Page Content -->
+    <main class="flex-1 p-4 lg:p-8 overflow-auto">
+
+      <!-- Page Header -->
+      <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-8">
+        <div>
+          <h1 class="text-2xl font-bold text-primary">Dashboard</h1>
+          <p class="text-base-content/60">Přehled aktuálního stavu kalendáře</p>
+        </div>
+        <div class="flex gap-2">
+          <a href="invite.html" class="btn btn-primary btn-sm gap-2">
+            <span>✉️</span>
+            Pozvat uživatele
+          </a>
+        </div>
+      </div>
+
+      <!-- Current Year Card -->
+      <div class="card bg-gradient-to-r from-primary/10 to-secondary/10 border border-primary/20 shadow-lg mb-8">
+        <div class="card-body">
+          <div class="flex flex-wrap items-center justify-between gap-4">
+            <div class="flex items-center gap-4">
+              <div class="avatar placeholder">
+                <div class="bg-primary text-primary-content rounded-full w-16 h-16">
+                  <span class="text-3xl">🎄</span>
+                </div>
+              </div>
+              <div>
+                <h2 class="text-2xl font-bold">Rok 2026</h2>
+                <div class="flex items-center gap-2 mt-1">
+                  <span class="badge badge-success badge-lg gap-1">🟢 registrace</span>
+                  <span class="text-sm text-base-content/60">od 1. 11. 2026</span>
+                </div>
+              </div>
+            </div>
+            <div class="flex flex-wrap gap-2">
+              <a href="years.html" class="btn btn-outline btn-sm gap-1">
+                <span>⚙️</span>
+                Nastavení
+              </a>
+              <a href="photos.html" class="btn btn-secondary btn-sm gap-1">
+                <span>📷</span>
+                Fotky
+              </a>
+              <button class="btn btn-primary btn-sm gap-1">
+                <span>🚀</span>
+                Otevřít advent
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Stats Grid -->
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+        <div class="stat bg-base-200 rounded-lg shadow">
+          <div class="stat-figure text-primary text-3xl">🎄</div>
+          <div class="stat-title">Rezervace</div>
+          <div class="stat-value text-primary">8/24</div>
+          <div class="stat-desc">33% obsazeno</div>
+        </div>
+
+        <div class="stat bg-base-200 rounded-lg shadow">
+          <div class="stat-figure text-secondary text-3xl">📅</div>
+          <div class="stat-title">Volné dny</div>
+          <div class="stat-value text-secondary">16</div>
+          <div class="stat-desc">Zbývá naplnit</div>
+        </div>
+
+        <div class="stat bg-base-200 rounded-lg shadow">
+          <div class="stat-figure text-accent text-3xl">👥</div>
+          <div class="stat-title">Uživatelé</div>
+          <div class="stat-value text-accent">12</div>
+          <div class="stat-desc">4 aktivní dnes</div>
+        </div>
+
+        <div class="stat bg-base-200 rounded-lg shadow">
+          <div class="stat-figure text-primary text-3xl">🏠</div>
+          <div class="stat-title">Domy</div>
+          <div class="stat-value">28</div>
+          <div class="stat-desc">V databázi</div>
+        </div>
+      </div>
+
+      <div class="grid lg:grid-cols-2 gap-8">
+
+        <!-- Calendar Overview -->
+        <div class="card bg-base-200 shadow-lg">
+          <div class="card-body">
+            <h3 class="card-title text-lg flex items-center gap-2">
+              <span>📅</span>
+              Přehled kalendáře
+            </h3>
+
+            <div class="grid grid-cols-6 gap-2 mt-4">
+              <!-- Days 1-24 mini grid -->
+              <div class="aspect-square rounded bg-primary flex items-center justify-center text-primary-content font-bold text-sm">1</div>
+              <div class="aspect-square rounded bg-primary flex items-center justify-center text-primary-content font-bold text-sm">2</div>
+              <div class="aspect-square rounded bg-primary flex items-center justify-center text-primary-content font-bold text-sm">3</div>
+              <div class="aspect-square rounded bg-base-300 flex items-center justify-center text-base-content/40 font-bold text-sm">4</div>
+              <div class="aspect-square rounded bg-base-300 flex items-center justify-center text-base-content/40 font-bold text-sm">5</div>
+              <div class="aspect-square rounded bg-base-300 flex items-center justify-center text-base-content/40 font-bold text-sm">6</div>
+              <div class="aspect-square rounded bg-primary flex items-center justify-center text-primary-content font-bold text-sm">7</div>
+              <div class="aspect-square rounded bg-base-300 flex items-center justify-center text-base-content/40 font-bold text-sm">8</div>
+              <div class="aspect-square rounded bg-base-300 flex items-center justify-center text-base-content/40 font-bold text-sm">9</div>
+              <div class="aspect-square rounded bg-primary flex items-center justify-center text-primary-content font-bold text-sm">10</div>
+              <div class="aspect-square rounded bg-base-300 flex items-center justify-center text-base-content/40 font-bold text-sm">11</div>
+              <div class="aspect-square rounded bg-base-300 flex items-center justify-center text-base-content/40 font-bold text-sm">12</div>
+              <div class="aspect-square rounded bg-base-300 flex items-center justify-center text-base-content/40 font-bold text-sm">13</div>
+              <div class="aspect-square rounded bg-primary flex items-center justify-center text-primary-content font-bold text-sm">14</div>
+              <div class="aspect-square rounded bg-primary flex items-center justify-center text-primary-content font-bold text-sm">15</div>
+              <div class="aspect-square rounded bg-base-300 flex items-center justify-center text-base-content/40 font-bold text-sm">16</div>
+              <div class="aspect-square rounded bg-base-300 flex items-center justify-center text-base-content/40 font-bold text-sm">17</div>
+              <div class="aspect-square rounded bg-base-300 flex items-center justify-center text-base-content/40 font-bold text-sm">18</div>
+              <div class="aspect-square rounded bg-base-300 flex items-center justify-center text-base-content/40 font-bold text-sm">19</div>
+              <div class="aspect-square rounded bg-base-300 flex items-center justify-center text-base-content/40 font-bold text-sm">20</div>
+              <div class="aspect-square rounded bg-base-300 flex items-center justify-center text-base-content/40 font-bold text-sm">21</div>
+              <div class="aspect-square rounded bg-base-300 flex items-center justify-center text-base-content/40 font-bold text-sm">22</div>
+              <div class="aspect-square rounded bg-primary flex items-center justify-center text-primary-content font-bold text-sm">23</div>
+              <div class="aspect-square rounded bg-secondary flex items-center justify-center text-secondary-content font-bold text-sm">24</div>
+            </div>
+
+            <div class="flex justify-center gap-4 mt-4 text-sm">
+              <div class="flex items-center gap-2">
+                <div class="w-3 h-3 rounded bg-primary"></div>
+                <span>Obsazeno (8)</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <div class="w-3 h-3 rounded bg-base-300"></div>
+                <span>Volne (16)</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Recent Reservations -->
+        <div class="card bg-base-200 shadow-lg">
+          <div class="card-body">
+            <div class="flex items-center justify-between">
+              <h3 class="card-title text-lg flex items-center gap-2">
+                <span>📋</span>
+                Poslední rezervace
+              </h3>
+              <a href="users.html" class="btn btn-ghost btn-xs">Vsechny →</a>
+            </div>
+
+            <div class="overflow-x-auto mt-4">
+              <table class="table table-sm">
+                <thead>
+                  <tr>
+                    <th>Den</th>
+                    <th>Uživatel</th>
+                    <th>Adresa</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="hover:bg-primary/5">
+                    <td>
+                      <span class="badge badge-primary">1</span>
+                    </td>
+                    <td>
+                      <div class="flex items-center gap-2">
+                        <div class="avatar placeholder">
+                          <div class="bg-primary text-primary-content rounded-full w-6">
+                            <span class="text-xs">JN</span>
+                          </div>
+                        </div>
+                        <span class="text-sm">Jan Novák</span>
+                      </div>
+                    </td>
+                    <td class="text-sm text-base-content/70">Pálova 120</td>
+                    <td>
+                      <button class="btn btn-ghost btn-xs">👁</button>
+                    </td>
+                  </tr>
+                  <tr class="hover:bg-primary/5">
+                    <td>
+                      <span class="badge badge-primary">2</span>
+                    </td>
+                    <td>
+                      <div class="flex items-center gap-2">
+                        <div class="avatar placeholder">
+                          <div class="bg-secondary text-secondary-content rounded-full w-6">
+                            <span class="text-xs">MS</span>
+                          </div>
+                        </div>
+                        <span class="text-sm">Marie Svobodová</span>
+                      </div>
+                    </td>
+                    <td class="text-sm text-base-content/70">Pálova 122</td>
+                    <td>
+                      <button class="btn btn-ghost btn-xs">👁</button>
+                    </td>
+                  </tr>
+                  <tr class="hover:bg-primary/5">
+                    <td>
+                      <span class="badge badge-primary">3</span>
+                    </td>
+                    <td>
+                      <div class="flex items-center gap-2">
+                        <div class="avatar placeholder">
+                          <div class="bg-accent text-accent-content rounded-full w-6">
+                            <span class="text-xs">PD</span>
+                          </div>
+                        </div>
+                        <span class="text-sm">Petr Dvořák</span>
+                      </div>
+                    </td>
+                    <td class="text-sm text-base-content/70">Pálova 124</td>
+                    <td>
+                      <button class="btn btn-ghost btn-xs">👁</button>
+                    </td>
+                  </tr>
+                  <tr class="hover:bg-primary/5">
+                    <td>
+                      <span class="badge badge-primary">7</span>
+                    </td>
+                    <td>
+                      <div class="flex items-center gap-2">
+                        <div class="avatar placeholder">
+                          <div class="bg-primary text-primary-content rounded-full w-6">
+                            <span class="text-xs">EK</span>
+                          </div>
+                        </div>
+                        <span class="text-sm">Eva Králová</span>
+                      </div>
+                    </td>
+                    <td class="text-sm text-base-content/70">Pálova 130</td>
+                    <td>
+                      <button class="btn btn-ghost btn-xs">👁</button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Quick Actions -->
+      <div class="card bg-base-200 shadow-lg mt-8">
+        <div class="card-body">
+          <h3 class="card-title text-lg flex items-center gap-2">
+            <span>⚡</span>
+            Rychlé akce
+          </h3>
+          <div class="flex flex-wrap gap-3 mt-4">
+            <a href="invite.html" class="btn btn-outline gap-2">
+              <span>✉️</span>
+              Pozvat uživatele
+            </a>
+            <a href="import.html" class="btn btn-outline gap-2">
+              <span>📥</span>
+              Importovat adresy
+            </a>
+            <a href="photos.html" class="btn btn-outline gap-2">
+              <span>📷</span>
+              Nahrat fotky
+            </a>
+            <a href="houses.html" class="btn btn-outline gap-2">
+              <span>🏠</span>
+              Spravovat domy
+            </a>
+          </div>
+        </div>
+      </div>
+
+    </main>
+
+  </div>
+
+</body>
+</html>

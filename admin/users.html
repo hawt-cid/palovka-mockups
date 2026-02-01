@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="cs" data-theme="retro">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Uzivatele - Admin</title>
+  <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.14/dist/full.min.css" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="min-h-screen flex bg-base-100">
+
+  <!-- Sidebar -->
+  <aside class="w-64 bg-base-200 border-r border-base-300 hidden lg:flex flex-col">
+    <div class="p-4 border-b border-base-300">
+      <a href="../index.html" class="flex items-center gap-2 text-xl font-bold">
+        <span class="text-2xl">🎄</span>
+        <span>Admin</span>
+      </a>
+    </div>
+    <ul class="menu p-4 flex-1">
+      <li><a href="dashboard.html">📊 Dashboard</a></li>
+      <li><a href="years.html">📅 Ročníky</a></li>
+      <li><a href="users.html" class="active font-semibold">👥 Uživatelé</a></li>
+      <li><a href="houses.html">🏠 Domy</a></li>
+      <li><a href="import.html">📥 Import adres</a></li>
+      <li><a href="invite.html">✉️ Pozvat</a></li>
+      <li><a href="photos.html">📷 Fotky</a></li>
+      <div class="divider"></div>
+      <li><a href="../index.html">← Zpět na web</a></li>
+    </ul>
+  </aside>
+
+  <!-- Main Content -->
+  <div class="flex-1 flex flex-col">
+
+    <!-- Top Bar (mobile) -->
+    <div class="navbar bg-base-200 border-b border-base-300 lg:hidden">
+      <div class="navbar-start">
+        <div class="dropdown">
+          <div tabindex="0" role="button" class="btn btn-ghost">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h8m-8 6h16" />
+            </svg>
+          </div>
+          <ul tabindex="0" class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
+            <li><a href="dashboard.html">📊 Dashboard</a></li>
+            <li><a href="years.html">📅 Ročníky</a></li>
+            <li><a href="users.html" class="active">👥 Uživatelé</a></li>
+            <li><a href="houses.html">🏠 Domy</a></li>
+            <li><a href="import.html">📥 Import</a></li>
+            <li><a href="invite.html">✉️ Pozvat</a></li>
+            <li><a href="photos.html">📷 Fotky</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="navbar-center">
+        <span class="text-xl font-bold">Uživatelé</span>
+      </div>
+    </div>
+
+    <!-- Page Content -->
+    <main class="flex-1 p-4 lg:p-8 overflow-auto">
+
+      <!-- Page Header -->
+      <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-8">
+        <div>
+          <h1 class="text-2xl font-bold text-primary">Uživatelé</h1>
+          <p class="text-base-content/60">Správa registrovaných uživatelů</p>
+        </div>
+        <a href="invite.html" class="btn btn-primary gap-2">
+          <span>✉️</span>
+          Pozvat nového
+        </a>
+      </div>
+
+      <!-- Filters -->
+      <div class="card bg-base-200 shadow mb-6">
+        <div class="card-body py-4">
+          <div class="flex flex-wrap items-center gap-4">
+            <div class="form-control flex-1 min-w-[200px]">
+              <input type="text" placeholder="Hledat podle jména nebo e-mailu..." class="input input-bordered input-sm w-full" />
+            </div>
+            <select class="select select-bordered select-sm">
+              <option>Vsichni</option>
+              <option>S rezervaci</option>
+              <option>Bez rezervace</option>
+              <option>Admini</option>
+            </select>
+            <button class="btn btn-ghost btn-sm">Vyčistit</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Users Table -->
+      <div class="card bg-base-200 shadow-lg">
+        <div class="card-body p-0">
+          <div class="overflow-x-auto">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Uživatel</th>
+                  <th>Dum</th>
+                  <th>Rezervace</th>
+                  <th>Role</th>
+                  <th>Akce</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="hover:bg-primary/5">
+                  <td>
+                    <div class="flex items-center gap-3">
+                      <div class="avatar placeholder">
+                        <div class="bg-primary text-primary-content rounded-full w-10">
+                          <span class="text-sm">JN</span>
+                        </div>
+                      </div>
+                      <div>
+                        <div class="font-semibold">Jan Novák</div>
+                        <div class="text-sm text-base-content/60">jan.novak@email.cz</div>
+                      </div>
+                    </div>
+                  </td>
+                  <td>
+                    <span class="badge badge-outline">Pálova 120</span>
+                  </td>
+                  <td>
+                    <span class="badge badge-primary gap-1">Den 1</span>
+                  </td>
+                  <td>
+                    <span class="badge badge-ghost badge-sm">uživatel</span>
+                  </td>
+                  <td>
+                    <div class="flex gap-1">
+                      <button class="btn btn-ghost btn-xs">✏️</button>
+                      <button class="btn btn-ghost btn-xs text-error">🗑️</button>
+                    </div>
+                  </td>
+                </tr>
+
+                <tr class="hover:bg-primary/5">
+                  <td>
+                    <div class="flex items-center gap-3">
+                      <div class="avatar placeholder">
+                        <div class="bg-secondary text-secondary-content rounded-full w-10">
+                          <span class="text-sm">MS</span>
+                        </div>
+                      </div>
+                      <div>
+                        <div class="font-semibold">Marie Svobodová</div>
+                        <div class="text-sm text-base-content/60">marie.s@email.cz</div>
+                      </div>
+                    </div>
+                  </td>
+                  <td>
+                    <span class="badge badge-outline">Pálova 122</span>
+                  </td>
+                  <td>
+                    <span class="badge badge-primary gap-1">Den 2</span>
+                  </td>
+                  <td>
+                    <span class="badge badge-ghost badge-sm">uživatel</span>
+                  </td>
+                  <td>
+                    <div class="flex gap-1">
+                      <button class="btn btn-ghost btn-xs">✏️</button>
+                      <button class="btn btn-ghost btn-xs text-error">🗑️</button>
+                    </div>
+                  </td>
+                </tr>
+
+                <tr class="hover:bg-primary/5">
+                  <td>
+                    <div class="flex items-center gap-3">
+                      <div class="avatar placeholder">
+                        <div class="bg-accent text-accent-content rounded-full w-10">
+                          <span class="text-sm">PD</span>
+                        </div>
+                      </div>
+                      <div>
+                        <div class="font-semibold">Petr Dvořák</div>
+                        <div class="text-sm text-base-content/60">petr.dvorak@email.cz</div>
+                      </div>
+                    </div>
+                  </td>
+                  <td>
+                    <span class="badge badge-outline">Pálova 124</span>
+                  </td>
+                  <td>
+                    <span class="badge badge-primary gap-1">Den 3</span>
+                  </td>
+                  <td>
+                    <span class="badge badge-ghost badge-sm">uživatel</span>
+                  </td>
+                  <td>
+                    <div class="flex gap-1">
+                      <button class="btn btn-ghost btn-xs">✏️</button>
+                      <button class="btn btn-ghost btn-xs text-error">🗑️</button>
+                    </div>
+                  </td>
+                </tr>
+
+                <tr class="hover:bg-primary/5">
+                  <td>
+                    <div class="flex items-center gap-3">
+                      <div class="avatar placeholder">
+                        <div class="bg-primary text-primary-content rounded-full w-10">
+                          <span class="text-sm">EK</span>
+                        </div>
+                      </div>
+                      <div>
+                        <div class="font-semibold">Eva Králová</div>
+                        <div class="text-sm text-base-content/60">eva.kralova@email.cz</div>
+                      </div>
+                    </div>
+                  </td>
+                  <td>
+                    <span class="badge badge-outline">Pálova 130</span>
+                  </td>
+                  <td>
+                    <span class="badge badge-primary gap-1">Den 7</span>
+                  </td>
+                  <td>
+                    <span class="badge badge-ghost badge-sm">uživatel</span>
+                  </td>
+                  <td>
+                    <div class="flex gap-1">
+                      <button class="btn btn-ghost btn-xs">✏️</button>
+                      <button class="btn btn-ghost btn-xs text-error">🗑️</button>
+                    </div>
+                  </td>
+                </tr>
+
+                <tr class="hover:bg-primary/5 bg-primary/5">
+                  <td>
+                    <div class="flex items-center gap-3">
+                      <div class="avatar placeholder">
+                        <div class="bg-warning text-warning-content rounded-full w-10">
+                          <span class="text-sm">A</span>
+                        </div>
+                      </div>
+                      <div>
+                        <div class="font-semibold">Admin</div>
+                        <div class="text-sm text-base-content/60">admin@palova.cz</div>
+                      </div>
+                    </div>
+                  </td>
+                  <td>
+                    <span class="text-base-content/40">-</span>
+                  </td>
+                  <td>
+                    <span class="text-base-content/40">-</span>
+                  </td>
+                  <td>
+                    <span class="badge badge-warning badge-sm">admin</span>
+                  </td>
+                  <td>
+                    <div class="flex gap-1">
+                      <button class="btn btn-ghost btn-xs">✏️</button>
+                    </div>
+                  </td>
+                </tr>
+
+                <tr class="hover:bg-primary/5">
+                  <td>
+                    <div class="flex items-center gap-3">
+                      <div class="avatar placeholder">
+                        <div class="bg-base-300 text-base-content/60 rounded-full w-10">
+                          <span class="text-sm">TH</span>
+                        </div>
+                      </div>
+                      <div>
+                        <div class="font-semibold text-base-content/70">Tomáš Hrubý</div>
+                        <div class="text-sm text-base-content/60">tomas.h@email.cz</div>
+                      </div>
+                    </div>
+                  </td>
+                  <td>
+                    <span class="badge badge-outline">Pálova 140</span>
+                  </td>
+                  <td>
+                    <span class="text-base-content/40 text-sm">bez rezervace</span>
+                  </td>
+                  <td>
+                    <span class="badge badge-ghost badge-sm">uživatel</span>
+                  </td>
+                  <td>
+                    <div class="flex gap-1">
+                      <button class="btn btn-ghost btn-xs">✏️</button>
+                      <button class="btn btn-ghost btn-xs text-error">🗑️</button>
+                    </div>
+                  </td>
+                </tr>
+
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Pagination -->
+          <div class="flex justify-center p-4 border-t border-base-300">
+            <div class="join">
+              <button class="join-item btn btn-sm">«</button>
+              <button class="join-item btn btn-sm btn-active">1</button>
+              <button class="join-item btn btn-sm">2</button>
+              <button class="join-item btn btn-sm">»</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </main>
+
+  </div>
+
+</body>
+</html>

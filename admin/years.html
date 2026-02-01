@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="cs" data-theme="retro">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rocniky - Admin</title>
+  <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.14/dist/full.min.css" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="min-h-screen flex bg-base-100">
+
+  <!-- Sidebar -->
+  <aside class="w-64 bg-base-200 border-r border-base-300 hidden lg:flex flex-col">
+    <div class="p-4 border-b border-base-300">
+      <a href="../index.html" class="flex items-center gap-2 text-xl font-bold">
+        <span class="text-2xl">🎄</span>
+        <span>Admin</span>
+      </a>
+    </div>
+    <ul class="menu p-4 flex-1">
+      <li><a href="dashboard.html">📊 Dashboard</a></li>
+      <li><a href="years.html" class="active font-semibold">📅 Ročníky</a></li>
+      <li><a href="users.html">👥 Uživatelé</a></li>
+      <li><a href="houses.html">🏠 Domy</a></li>
+      <li><a href="import.html">📥 Import adres</a></li>
+      <li><a href="invite.html">✉️ Pozvat</a></li>
+      <li><a href="photos.html">📷 Fotky</a></li>
+      <div class="divider"></div>
+      <li><a href="../index.html">← Zpět na web</a></li>
+    </ul>
+  </aside>
+
+  <!-- Main Content -->
+  <div class="flex-1 flex flex-col">
+
+    <!-- Top Bar (mobile) -->
+    <div class="navbar bg-base-200 border-b border-base-300 lg:hidden">
+      <div class="navbar-start">
+        <div class="dropdown">
+          <div tabindex="0" role="button" class="btn btn-ghost">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h8m-8 6h16" />
+            </svg>
+          </div>
+          <ul tabindex="0" class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
+            <li><a href="dashboard.html">📊 Dashboard</a></li>
+            <li><a href="years.html" class="active">📅 Ročníky</a></li>
+            <li><a href="users.html">👥 Uživatelé</a></li>
+            <li><a href="houses.html">🏠 Domy</a></li>
+            <li><a href="import.html">📥 Import</a></li>
+            <li><a href="invite.html">✉️ Pozvat</a></li>
+            <li><a href="photos.html">📷 Fotky</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="navbar-center">
+        <span class="text-xl font-bold">Ročníky</span>
+      </div>
+    </div>
+
+    <!-- Page Content -->
+    <main class="flex-1 p-4 lg:p-8 overflow-auto">
+
+      <!-- Page Header -->
+      <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-8">
+        <div>
+          <h1 class="text-2xl font-bold text-primary">Ročníky</h1>
+          <p class="text-base-content/60">Správa jednotlivých ročníků kalendáře</p>
+        </div>
+        <button class="btn btn-primary gap-2" onclick="document.getElementById('newYearModal').showModal()">
+          <span>+</span>
+          Nový ročník
+        </button>
+      </div>
+
+      <!-- State Machine Info -->
+      <div class="alert bg-base-200 border border-base-300 mb-8">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-base-content/70" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+        <div>
+          <h4 class="font-semibold">Stavy ročníku</h4>
+          <div class="flex flex-wrap gap-2 mt-2">
+            <span class="badge badge-neutral gap-1">⚙️ příprava</span>
+            <span>→</span>
+            <span class="badge badge-success gap-1">🟢 registrace</span>
+            <span>→</span>
+            <span class="badge badge-warning gap-1">🟡 advent</span>
+            <span>→</span>
+            <span class="badge badge-info gap-1">📦 archiv</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Years List -->
+      <div class="space-y-4">
+
+        <!-- 2026 - Active -->
+        <div class="card bg-gradient-to-r from-primary/10 to-secondary/10 border-2 border-primary/30 shadow-lg">
+          <div class="card-body">
+            <div class="flex flex-wrap items-center justify-between gap-4">
+              <div class="flex items-center gap-4">
+                <div class="avatar placeholder">
+                  <div class="bg-primary text-primary-content rounded-full w-14 h-14">
+                    <span class="text-xl font-bold">26</span>
+                  </div>
+                </div>
+                <div>
+                  <div class="flex items-center gap-2">
+                    <h3 class="text-xl font-bold">2026</h3>
+                    <span class="badge badge-primary badge-sm">aktivní</span>
+                  </div>
+                  <span class="badge badge-success gap-1 mt-1">🟢 registrace</span>
+                </div>
+              </div>
+              <div class="flex flex-wrap gap-2">
+                <button class="btn btn-primary btn-sm gap-1">
+                  <span>🚀</span>
+                  Otevřít advent
+                </button>
+                <button class="btn btn-outline btn-sm gap-1">
+                  <span>⚙️</span>
+                  Nastavení
+                </button>
+              </div>
+            </div>
+
+            <div class="stats stats-vertical sm:stats-horizontal bg-base-100/50 shadow mt-4">
+              <div class="stat py-3">
+                <div class="stat-title text-xs">Rezervace</div>
+                <div class="stat-value text-lg text-primary">8/24</div>
+              </div>
+              <div class="stat py-3">
+                <div class="stat-title text-xs">Uživatelé</div>
+                <div class="stat-value text-lg">12</div>
+              </div>
+              <div class="stat py-3">
+                <div class="stat-title text-xs">Fotky</div>
+                <div class="stat-value text-lg">0</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2025 - Archived -->
+        <div class="card bg-base-200 shadow">
+          <div class="card-body">
+            <div class="flex flex-wrap items-center justify-between gap-4">
+              <div class="flex items-center gap-4">
+                <div class="avatar placeholder">
+                  <div class="bg-base-300 text-base-content/60 rounded-full w-14 h-14">
+                    <span class="text-xl font-bold">25</span>
+                  </div>
+                </div>
+                <div>
+                  <h3 class="text-xl font-bold text-base-content/70">2025</h3>
+                  <span class="badge badge-info gap-1 mt-1">📦 archiv</span>
+                </div>
+              </div>
+              <div class="flex gap-2">
+                <a href="../gallery.html" class="btn btn-ghost btn-sm gap-1">
+                  <span>📷</span>
+                  Galerie
+                </a>
+              </div>
+            </div>
+
+            <div class="stats stats-vertical sm:stats-horizontal bg-base-100/50 mt-4">
+              <div class="stat py-3">
+                <div class="stat-title text-xs">Rezervace</div>
+                <div class="stat-value text-lg">24/24</div>
+              </div>
+              <div class="stat py-3">
+                <div class="stat-title text-xs">Uživatelé</div>
+                <div class="stat-value text-lg">24</div>
+              </div>
+              <div class="stat py-3">
+                <div class="stat-title text-xs">Fotky</div>
+                <div class="stat-value text-lg">24</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2024 - Archived -->
+        <div class="card bg-base-200 shadow">
+          <div class="card-body">
+            <div class="flex flex-wrap items-center justify-between gap-4">
+              <div class="flex items-center gap-4">
+                <div class="avatar placeholder">
+                  <div class="bg-base-300 text-base-content/60 rounded-full w-14 h-14">
+                    <span class="text-xl font-bold">24</span>
+                  </div>
+                </div>
+                <div>
+                  <h3 class="text-xl font-bold text-base-content/70">2024</h3>
+                  <span class="badge badge-info gap-1 mt-1">📦 archiv</span>
+                </div>
+              </div>
+              <div class="flex gap-2">
+                <a href="../gallery.html" class="btn btn-ghost btn-sm gap-1">
+                  <span>📷</span>
+                  Galerie
+                </a>
+              </div>
+            </div>
+
+            <div class="stats stats-vertical sm:stats-horizontal bg-base-100/50 mt-4">
+              <div class="stat py-3">
+                <div class="stat-title text-xs">Rezervace</div>
+                <div class="stat-value text-lg">22/24</div>
+              </div>
+              <div class="stat py-3">
+                <div class="stat-title text-xs">Uživatelé</div>
+                <div class="stat-value text-lg">22</div>
+              </div>
+              <div class="stat py-3">
+                <div class="stat-title text-xs">Fotky</div>
+                <div class="stat-value text-lg">22</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </main>
+
+  </div>
+
+  <!-- New Year Modal -->
+  <dialog id="newYearModal" class="modal">
+    <div class="modal-box">
+      <h3 class="font-bold text-lg text-primary">Nový ročník</h3>
+      <div class="form-control mt-4">
+        <label class="label">
+          <span class="label-text">Rok</span>
+        </label>
+        <input type="number" value="2027" class="input input-bordered" />
+      </div>
+      <div class="modal-action">
+        <form method="dialog">
+          <button class="btn btn-ghost">Zrušit</button>
+        </form>
+        <button class="btn btn-primary">Vytvořit</button>
+      </div>
+    </div>
+    <form method="dialog" class="modal-backdrop">
+      <button>close</button>
+    </form>
+  </dialog>
+
+</body>
+</html>

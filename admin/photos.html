@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="cs" data-theme="retro">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fotky - Admin</title>
+  <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.14/dist/full.min.css" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="min-h-screen flex bg-base-100">
+
+  <!-- Sidebar -->
+  <aside class="w-64 bg-base-200 border-r border-base-300 hidden lg:flex flex-col">
+    <div class="p-4 border-b border-base-300">
+      <a href="../index.html" class="flex items-center gap-2 text-xl font-bold">
+        <span class="text-2xl">🎄</span>
+        <span>Admin</span>
+      </a>
+    </div>
+    <ul class="menu p-4 flex-1">
+      <li><a href="dashboard.html">📊 Dashboard</a></li>
+      <li><a href="years.html">📅 Ročníky</a></li>
+      <li><a href="users.html">👥 Uživatelé</a></li>
+      <li><a href="houses.html">🏠 Domy</a></li>
+      <li><a href="import.html">📥 Import adres</a></li>
+      <li><a href="invite.html">✉️ Pozvat</a></li>
+      <li><a href="photos.html" class="active font-semibold">📷 Fotky</a></li>
+      <div class="divider"></div>
+      <li><a href="../index.html">← Zpět na web</a></li>
+    </ul>
+  </aside>
+
+  <!-- Main Content -->
+  <div class="flex-1 flex flex-col">
+
+    <!-- Top Bar (mobile) -->
+    <div class="navbar bg-base-200 border-b border-base-300 lg:hidden">
+      <div class="navbar-start">
+        <div class="dropdown">
+          <div tabindex="0" role="button" class="btn btn-ghost">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h8m-8 6h16" />
+            </svg>
+          </div>
+          <ul tabindex="0" class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
+            <li><a href="dashboard.html">📊 Dashboard</a></li>
+            <li><a href="years.html">📅 Ročníky</a></li>
+            <li><a href="users.html">👥 Uživatelé</a></li>
+            <li><a href="houses.html">🏠 Domy</a></li>
+            <li><a href="import.html">📥 Import</a></li>
+            <li><a href="invite.html">✉️ Pozvat</a></li>
+            <li><a href="photos.html" class="active">📷 Fotky</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="navbar-center">
+        <span class="text-xl font-bold">Fotky</span>
+      </div>
+    </div>
+
+    <!-- Page Content -->
+    <main class="flex-1 p-4 lg:p-8 overflow-auto">
+
+      <!-- Page Header -->
+      <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-8">
+        <div>
+          <h1 class="text-2xl font-bold text-primary">Fotky 2026</h1>
+          <p class="text-base-content/60">Nahrajte fotky pro každý den adventu</p>
+        </div>
+        <select class="select select-bordered">
+          <option selected>2026</option>
+          <option>2025</option>
+          <option>2024</option>
+          <option>2023</option>
+        </select>
+      </div>
+
+      <!-- Progress -->
+      <div class="card bg-base-200 shadow-lg mb-8">
+        <div class="card-body py-4">
+          <div class="flex flex-wrap items-center justify-between gap-4">
+            <div class="flex items-center gap-4">
+              <div class="radial-progress text-primary" style="--value:12; --size:4rem;" role="progressbar">12%</div>
+              <div>
+                <p class="font-semibold">3 z 24 fotek nahráno</p>
+                <p class="text-sm text-base-content/60">Zbývá 21 dní</p>
+              </div>
+            </div>
+            <button class="btn btn-primary gap-2" onclick="document.getElementById('uploadModal').showModal()">
+              <span>📤</span>
+              Nahrát fotky
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Photos Grid -->
+      <div class="grid grid-cols-4 sm:grid-cols-6 lg:grid-cols-8 gap-3">
+
+        <!-- Day 1 - Has photo -->
+        <div class="card bg-base-200 shadow overflow-hidden group">
+          <figure class="aspect-square relative">
+            <img src="../_assets/photos/2024/2024-1.jpg" alt="Den 1" class="w-full h-full object-cover">
+            <div class="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
+              <button class="btn btn-circle btn-sm btn-ghost text-white">👁</button>
+              <button class="btn btn-circle btn-sm btn-ghost text-error">🗑️</button>
+            </div>
+            <div class="absolute top-1 left-1">
+              <span class="badge badge-primary badge-sm font-bold">1</span>
+            </div>
+          </figure>
+        </div>
+
+        <!-- Day 2 - Has photo -->
+        <div class="card bg-base-200 shadow overflow-hidden group">
+          <figure class="aspect-square relative">
+            <img src="../_assets/photos/2024/2024-2.jpg" alt="Den 2" class="w-full h-full object-cover">
+            <div class="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
+              <button class="btn btn-circle btn-sm btn-ghost text-white">👁</button>
+              <button class="btn btn-circle btn-sm btn-ghost text-error">🗑️</button>
+            </div>
+            <div class="absolute top-1 left-1">
+              <span class="badge badge-primary badge-sm font-bold">2</span>
+            </div>
+          </figure>
+        </div>
+
+        <!-- Day 3 - Has photo -->
+        <div class="card bg-base-200 shadow overflow-hidden group">
+          <figure class="aspect-square relative">
+            <img src="../_assets/photos/2024/2024-3.jpg" alt="Den 3" class="w-full h-full object-cover">
+            <div class="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
+              <button class="btn btn-circle btn-sm btn-ghost text-white">👁</button>
+              <button class="btn btn-circle btn-sm btn-ghost text-error">🗑️</button>
+            </div>
+            <div class="absolute top-1 left-1">
+              <span class="badge badge-primary badge-sm font-bold">3</span>
+            </div>
+          </figure>
+        </div>
+
+        <!-- Day 4 - No photo, has reservation -->
+        <div class="card bg-base-300 shadow overflow-hidden cursor-pointer hover:bg-primary/10 transition-colors" onclick="document.getElementById('uploadModal').showModal()">
+          <div class="aspect-square flex flex-col items-center justify-center">
+            <span class="text-2xl font-bold text-base-content/40">4</span>
+            <span class="text-xl mt-1">📤</span>
+            <span class="text-xs text-base-content/50 mt-1">Nahrát</span>
+          </div>
+        </div>
+
+        <!-- Days 5-24 - No photos -->
+        <div class="card bg-base-300 shadow overflow-hidden cursor-pointer hover:bg-primary/10 transition-colors" onclick="document.getElementById('uploadModal').showModal()">
+          <div class="aspect-square flex flex-col items-center justify-center">
+            <span class="text-2xl font-bold text-base-content/40">5</span>
+            <span class="text-xl mt-1">📤</span>
+          </div>
+        </div>
+
+        <div class="card bg-base-300 shadow overflow-hidden cursor-pointer hover:bg-primary/10 transition-colors">
+          <div class="aspect-square flex flex-col items-center justify-center">
+            <span class="text-2xl font-bold text-base-content/40">6</span>
+            <span class="text-xl mt-1">📤</span>
+          </div>
+        </div>
+
+        <div class="card bg-base-300 shadow overflow-hidden cursor-pointer hover:bg-primary/10 transition-colors">
+          <div class="aspect-square flex flex-col items-center justify-center">
+            <span class="text-2xl font-bold text-base-content/40">7</span>
+            <span class="text-xl mt-1">📤</span>
+          </div>
+        </div>
+
+        <div class="card bg-base-300 shadow overflow-hidden cursor-pointer hover:bg-primary/10 transition-colors">
+          <div class="aspect-square flex flex-col items-center justify-center">
+            <span class="text-2xl font-bold text-base-content/40">8</span>
+            <span class="text-xl mt-1">📤</span>
+          </div>
+        </div>
+
+        <div class="card bg-base-300 shadow overflow-hidden cursor-pointer hover:bg-primary/10 transition-colors">
+          <div class="aspect-square flex flex-col items-center justify-center">
+            <span class="text-2xl font-bold text-base-content/40">9</span>
+            <span class="text-xl mt-1">📤</span>
+          </div>
+        </div>
+
+        <div class="card bg-base-300 shadow overflow-hidden cursor-pointer hover:bg-primary/10 transition-colors">
+          <div class="aspect-square flex flex-col items-center justify-center">
+            <span class="text-2xl font-bold text-base-content/40">10</span>
+            <span class="text-xl mt-1">📤</span>
+          </div>
+        </div>
+
+        <div class="card bg-base-300 shadow overflow-hidden cursor-pointer hover:bg-primary/10 transition-colors">
+          <div class="aspect-square flex flex-col items-center justify-center">
+            <span class="text-2xl font-bold text-base-content/40">11</span>
+            <span class="text-xl mt-1">📤</span>
+          </div>
+        </div>
+
+        <div class="card bg-base-300 shadow overflow-hidden cursor-pointer hover:bg-primary/10 transition-colors">
+          <div class="aspect-square flex flex-col items-center justify-center">
+            <span class="text-2xl font-bold text-base-content/40">12</span>
+            <span class="text-xl mt-1">📤</span>
+          </div>
+        </div>
+
+        <div class="card bg-base-300 shadow overflow-hidden cursor-pointer hover:bg-primary/10 transition-colors">
+          <div class="aspect-square flex flex-col items-center justify-center">
+            <span class="text-2xl font-bold text-base-content/40">13</span>
+            <span class="text-xl mt-1">📤</span>
+          </div>
+        </div>
+
+        <div class="card bg-base-300 shadow overflow-hidden cursor-pointer hover:bg-primary/10 transition-colors">
+          <div class="aspect-square flex flex-col items-center justify-center">
+            <span class="text-2xl font-bold text-base-content/40">14</span>
+            <span class="text-xl mt-1">📤</span>
+          </div>
+        </div>
+
+        <div class="card bg-base-300 shadow overflow-hidden cursor-pointer hover:bg-primary/10 transition-colors">
+          <div class="aspect-square flex flex-col items-center justify-center">
+            <span class="text-2xl font-bold text-base-content/40">15</span>
+            <span class="text-xl mt-1">📤</span>
+          </div>
+        </div>
+
+        <div class="card bg-base-300 shadow overflow-hidden cursor-pointer hover:bg-primary/10 transition-colors">
+          <div class="aspect-square flex flex-col items-center justify-center">
+            <span class="text-2xl font-bold text-base-content/40">16</span>
+            <span class="text-xl mt-1">📤</span>
+          </div>
+        </div>
+
+        <div class="card bg-base-300 shadow overflow-hidden cursor-pointer hover:bg-primary/10 transition-colors">
+          <div class="aspect-square flex flex-col items-center justify-center">
+            <span class="text-2xl font-bold text-base-content/40">17</span>
+            <span class="text-xl mt-1">📤</span>
+          </div>
+        </div>
+
+        <div class="card bg-base-300 shadow overflow-hidden cursor-pointer hover:bg-primary/10 transition-colors">
+          <div class="aspect-square flex flex-col items-center justify-center">
+            <span class="text-2xl font-bold text-base-content/40">18</span>
+            <span class="text-xl mt-1">📤</span>
+          </div>
+        </div>
+
+        <div class="card bg-base-300 shadow overflow-hidden cursor-pointer hover:bg-primary/10 transition-colors">
+          <div class="aspect-square flex flex-col items-center justify-center">
+            <span class="text-2xl font-bold text-base-content/40">19</span>
+            <span class="text-xl mt-1">📤</span>
+          </div>
+        </div>
+
+        <div class="card bg-base-300 shadow overflow-hidden cursor-pointer hover:bg-primary/10 transition-colors">
+          <div class="aspect-square flex flex-col items-center justify-center">
+            <span class="text-2xl font-bold text-base-content/40">20</span>
+            <span class="text-xl mt-1">📤</span>
+          </div>
+        </div>
+
+        <div class="card bg-base-300 shadow overflow-hidden cursor-pointer hover:bg-primary/10 transition-colors">
+          <div class="aspect-square flex flex-col items-center justify-center">
+            <span class="text-2xl font-bold text-base-content/40">21</span>
+            <span class="text-xl mt-1">📤</span>
+          </div>
+        </div>
+
+        <div class="card bg-base-300 shadow overflow-hidden cursor-pointer hover:bg-primary/10 transition-colors">
+          <div class="aspect-square flex flex-col items-center justify-center">
+            <span class="text-2xl font-bold text-base-content/40">22</span>
+            <span class="text-xl mt-1">📤</span>
+          </div>
+        </div>
+
+        <div class="card bg-base-300 shadow overflow-hidden cursor-pointer hover:bg-primary/10 transition-colors">
+          <div class="aspect-square flex flex-col items-center justify-center">
+            <span class="text-2xl font-bold text-base-content/40">23</span>
+            <span class="text-xl mt-1">📤</span>
+          </div>
+        </div>
+
+        <!-- Day 24 - Special -->
+        <div class="card bg-gradient-to-br from-primary/20 to-secondary/20 border-2 border-primary/30 shadow overflow-hidden cursor-pointer hover:border-primary transition-colors">
+          <div class="aspect-square flex flex-col items-center justify-center">
+            <span class="text-2xl font-bold text-primary">24</span>
+            <span class="text-xl mt-1">🌟</span>
+          </div>
+        </div>
+
+      </div>
+
+    </main>
+
+  </div>
+
+  <!-- Upload Modal -->
+  <dialog id="uploadModal" class="modal">
+    <div class="modal-box">
+      <h3 class="font-bold text-lg text-primary">Nahrát fotku</h3>
+
+      <div class="form-control mt-4">
+        <label class="label">
+          <span class="label-text font-semibold">Den</span>
+        </label>
+        <select class="select select-bordered">
+          <option disabled selected>Vyberte den...</option>
+          <option>Den 4 - Pálova 126 (Jan Novák)</option>
+          <option>Den 5 - Pálova 128</option>
+          <option>Den 6 - Pálova 130</option>
+        </select>
+      </div>
+
+      <div class="form-control mt-4">
+        <label class="label">
+          <span class="label-text font-semibold">Fotka</span>
+        </label>
+        <div class="border-2 border-dashed border-base-300 rounded-lg p-8 text-center hover:border-primary transition-colors cursor-pointer">
+          <div class="text-4xl mb-2">📷</div>
+          <p class="text-base-content/70">Klikněte pro výběr souboru</p>
+          <p class="text-xs text-base-content/50 mt-1">nebo přetáhněte sem</p>
+          <input type="file" class="hidden" accept="image/*" />
+        </div>
+      </div>
+
+      <div class="form-control mt-4">
+        <label class="label">
+          <span class="label-text font-semibold">Popis (nepovinne)</span>
+        </label>
+        <input type="text" placeholder="Krásná výzdoba..." class="input input-bordered" />
+      </div>
+
+      <div class="modal-action">
+        <form method="dialog">
+          <button class="btn btn-ghost">Zrušit</button>
+        </form>
+        <button class="btn btn-primary gap-2">
+          <span>📤</span>
+          Nahrát
+        </button>
+      </div>
+    </div>
+    <form method="dialog" class="modal-backdrop">
+      <button>close</button>
+    </form>
+  </dialog>
+
+</body>
+</html>

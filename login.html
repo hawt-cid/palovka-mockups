@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="cs" data-theme="retro">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Přihlášení - Adventní Kalendář</title>
+  <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.14/dist/full.min.css" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="min-h-screen flex flex-col bg-base-100">
+
+  <!-- Navbar -->
+  <div class="navbar bg-base-200 shadow-lg">
+    <div class="navbar-start">
+      <a href="index.html" class="btn btn-ghost text-xl gap-2">
+        <span class="text-2xl">🎄</span>
+        <span class="hidden sm:inline font-bold">Adventní Kalendář</span>
+      </a>
+    </div>
+    <div class="navbar-end gap-2">
+      <a href="admin/dashboard.html" class="btn btn-ghost btn-sm">Admin</a>
+      <a href="index.html" class="btn btn-ghost btn-sm">Zpět na kalendář</a>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <main class="flex-1 flex items-center justify-center p-4">
+    <div class="w-full max-w-md">
+
+      <!-- Login Card -->
+      <div class="card bg-base-200 shadow-xl">
+        <div class="card-body">
+
+          <!-- Header -->
+          <div class="text-center mb-6">
+            <div class="avatar placeholder mb-4">
+              <div class="bg-primary text-primary-content rounded-full w-20 h-20">
+                <span class="text-4xl">🔐</span>
+              </div>
+            </div>
+            <h1 class="text-2xl font-bold text-primary">Přihlášení</h1>
+            <p class="text-base-content/70 mt-2">Přihlaste se pomocí magického odkazu</p>
+          </div>
+
+          <!-- Divider with decorations -->
+          <div class="flex items-center gap-4 my-4">
+            <div class="flex-1 h-px bg-base-300"></div>
+            <span class="text-2xl">🎄</span>
+            <div class="flex-1 h-px bg-base-300"></div>
+          </div>
+
+          <!-- Login Form -->
+          <form class="space-y-4">
+            <div class="form-control">
+              <label class="label">
+                <span class="label-text font-semibold">E-mailová adresa</span>
+              </label>
+              <input type="email" placeholder="vas@email.cz" class="input input-bordered input-primary w-full" required>
+              <label class="label">
+                <span class="label-text-alt text-base-content/60">Použijte email, na který jste byli pozváni</span>
+              </label>
+            </div>
+
+            <button type="submit" class="btn btn-primary w-full gap-2">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
+                <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
+              </svg>
+              Odeslat přihlašovací odkaz
+            </button>
+          </form>
+
+          <!-- Info Box -->
+          <div class="alert bg-secondary/10 border border-secondary/20 mt-6">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-secondary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            <div>
+              <h4 class="font-semibold text-sm">Jak to funguje?</h4>
+              <p class="text-xs text-base-content/70">Na váš email přijde odkaz, kterým se přihlásíte. Žádné heslo není potřeba!</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Not registered yet? -->
+      <div class="text-center mt-6">
+        <p class="text-base-content/60">Ještě nejste registrovaní?</p>
+        <a href="jak-se-zapojit.html" class="link link-primary font-semibold">Zjistěte jak se zapojit</a>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer footer-center p-6 bg-base-200 text-base-content border-t border-base-300">
+    <aside>
+      <p class="text-sm text-base-content/60">© 2026 Sousedský Adventní Kalendář | Pálova, Slaný</p>
+      <p class="text-sm text-base-content/60 mt-1">Vytvořeno s ❤️ pro naši komunitu</p>
+    </aside>
+  </footer>
+
+</body>
+</html>

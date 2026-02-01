@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="cs" data-theme="retro">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pozvat uzivatele - Admin</title>
+  <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.14/dist/full.min.css" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="min-h-screen flex bg-base-100">
+
+  <!-- Sidebar -->
+  <aside class="w-64 bg-base-200 border-r border-base-300 hidden lg:flex flex-col">
+    <div class="p-4 border-b border-base-300">
+      <a href="../index.html" class="flex items-center gap-2 text-xl font-bold">
+        <span class="text-2xl">🎄</span>
+        <span>Admin</span>
+      </a>
+    </div>
+    <ul class="menu p-4 flex-1">
+      <li><a href="dashboard.html">📊 Dashboard</a></li>
+      <li><a href="years.html">📅 Ročníky</a></li>
+      <li><a href="users.html">👥 Uživatelé</a></li>
+      <li><a href="houses.html">🏠 Domy</a></li>
+      <li><a href="import.html">📥 Import adres</a></li>
+      <li><a href="invite.html" class="active font-semibold">✉️ Pozvat</a></li>
+      <li><a href="photos.html">📷 Fotky</a></li>
+      <div class="divider"></div>
+      <li><a href="../index.html">← Zpět na web</a></li>
+    </ul>
+  </aside>
+
+  <!-- Main Content -->
+  <div class="flex-1 flex flex-col">
+
+    <!-- Top Bar (mobile) -->
+    <div class="navbar bg-base-200 border-b border-base-300 lg:hidden">
+      <div class="navbar-start">
+        <div class="dropdown">
+          <div tabindex="0" role="button" class="btn btn-ghost">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h8m-8 6h16" />
+            </svg>
+          </div>
+          <ul tabindex="0" class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
+            <li><a href="dashboard.html">📊 Dashboard</a></li>
+            <li><a href="years.html">📅 Ročníky</a></li>
+            <li><a href="users.html">👥 Uživatelé</a></li>
+            <li><a href="houses.html">🏠 Domy</a></li>
+            <li><a href="import.html">📥 Import</a></li>
+            <li><a href="invite.html" class="active">✉️ Pozvat</a></li>
+            <li><a href="photos.html">📷 Fotky</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="navbar-center">
+        <span class="text-xl font-bold">Pozvat uživatele</span>
+      </div>
+    </div>
+
+    <!-- Page Content -->
+    <main class="flex-1 p-4 lg:p-8 overflow-auto">
+
+      <div class="max-w-2xl mx-auto">
+
+        <!-- Page Header -->
+        <div class="text-center mb-8">
+          <div class="avatar placeholder mb-4">
+            <div class="bg-primary text-primary-content rounded-full w-16 h-16">
+              <span class="text-3xl">✉️</span>
+            </div>
+          </div>
+          <h1 class="text-2xl font-bold text-primary">Pozvat nového uživatele</h1>
+          <p class="text-base-content/60">Vytvořte pozvánku s magickým odkazem</p>
+        </div>
+
+        <!-- Invite Form -->
+        <div class="card bg-base-200 shadow-lg">
+          <div class="card-body">
+
+            <div class="form-control">
+              <label class="label">
+                <span class="label-text font-semibold">Jmeno</span>
+              </label>
+              <input type="text" placeholder="Jan Novák" class="input input-bordered" />
+            </div>
+
+            <div class="form-control mt-4">
+              <label class="label">
+                <span class="label-text font-semibold">E-mail</span>
+              </label>
+              <input type="email" placeholder="jan.novak@email.cz" class="input input-bordered" />
+              <label class="label">
+                <span class="label-text-alt text-base-content/60">Na tento e-mail bude odeslána pozvánka</span>
+              </label>
+            </div>
+
+            <div class="form-control mt-4">
+              <label class="label">
+                <span class="label-text font-semibold">Přidat dům</span>
+              </label>
+              <select class="select select-bordered">
+                <option disabled selected>Vyberte dum...</option>
+                <option>Pálova 126 (volný)</option>
+                <option>Pálova 128 (volný)</option>
+                <option>Pálova 132 (volný)</option>
+                <option>Pálova 134 (volný)</option>
+                <option>Pálova 136 (volný)</option>
+                <option>Pálova 138 (volný)</option>
+                <option>Pálova 140 (volný)</option>
+                <option>Pálova 142 (volný)</option>
+              </select>
+              <label class="label">
+                <span class="label-text-alt text-base-content/60">
+                  Uživatel bude automaticky přiřazen k tomuto domu
+                </span>
+              </label>
+            </div>
+
+            <div class="form-control mt-4">
+              <label class="label">
+                <span class="label-text font-semibold">Telefon (nepovinne)</span>
+              </label>
+              <input type="tel" placeholder="+420 123 456 789" class="input input-bordered" />
+            </div>
+
+            <div class="divider"></div>
+
+            <div class="form-control">
+              <label class="label cursor-pointer justify-start gap-3">
+                <input type="checkbox" class="checkbox checkbox-primary" checked />
+                <span class="label-text">Odeslat e-mail s pozvánkou</span>
+              </label>
+            </div>
+
+            <div class="form-control">
+              <label class="label cursor-pointer justify-start gap-3">
+                <input type="checkbox" class="checkbox checkbox-primary" />
+                <span class="label-text">Přidat roli admin</span>
+              </label>
+            </div>
+
+            <div class="card-actions mt-6">
+              <button class="btn btn-primary gap-2 flex-1">
+                <span>✉️</span>
+                Vytvořit a odeslat pozvánku
+              </button>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Recent Invites -->
+        <div class="card bg-base-200 shadow mt-8">
+          <div class="card-body">
+            <h3 class="card-title text-lg flex items-center gap-2">
+              <span>📨</span>
+              Poslední pozvánky
+            </h3>
+
+            <div class="overflow-x-auto mt-4">
+              <table class="table table-sm">
+                <thead>
+                  <tr>
+                    <th>E-mail</th>
+                    <th>Dům</th>
+                    <th>Stav</th>
+                    <th>Akce</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="hover:bg-primary/5">
+                    <td class="text-sm">tomas.h@email.cz</td>
+                    <td><span class="badge badge-outline badge-sm">Pálova 140</span></td>
+                    <td><span class="badge badge-success badge-sm">použitá</span></td>
+                    <td>-</td>
+                  </tr>
+                  <tr class="hover:bg-primary/5">
+                    <td class="text-sm">alena.k@email.cz</td>
+                    <td><span class="badge badge-outline badge-sm">Pálova 142</span></td>
+                    <td><span class="badge badge-warning badge-sm">čeká</span></td>
+                    <td>
+                      <button class="btn btn-ghost btn-xs">🔄</button>
+                    </td>
+                  </tr>
+                  <tr class="hover:bg-primary/5">
+                    <td class="text-sm">pavel.n@email.cz</td>
+                    <td><span class="badge badge-outline badge-sm">Pálova 144</span></td>
+                    <td><span class="badge badge-error badge-sm">vypršelá</span></td>
+                    <td>
+                      <button class="btn btn-ghost btn-xs">🔄</button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- Help -->
+        <div class="alert bg-base-200 border border-base-300 mt-8">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-base-content/70" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          <div class="text-sm">
+            <h4 class="font-semibold">Jak funguje pozvánka?</h4>
+            <p class="text-base-content/70 mt-1">
+              Po vytvoření pozvánky bude na zadaný e-mail odeslán magický odkaz.
+              Po kliknutí na odkaz bude uživatel automaticky zaregistrován a přihlášen.
+              Odkaz je platny 7 dni.
+            </p>
+          </div>
+        </div>
+
+      </div>
+
+    </main>
+
+  </div>
+
+</body>
+</html>

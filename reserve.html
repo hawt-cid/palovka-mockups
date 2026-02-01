@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="cs" data-theme="retro">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rezervace - Adventní Kalendář</title>
+  <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.14/dist/full.min.css" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    /* Wheel animation */
+    .wheel-container {
+      perspective: 1000px;
+    }
+    .wheel {
+      transition: transform 3s cubic-bezier(0.17, 0.67, 0.12, 0.99);
+    }
+    .wheel.spinning {
+      animation: wheelSpin 3s cubic-bezier(0.17, 0.67, 0.12, 0.99) forwards;
+    }
+    @keyframes wheelSpin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(1800deg); }
+    }
+    .day-slot {
+      transition: all 0.3s ease;
+    }
+    .day-slot:hover:not(.reserved):not(.selected) {
+      transform: scale(1.1);
+      z-index: 10;
+    }
+    .day-slot.selected {
+      animation: pulse 1s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+    .confetti {
+      position: fixed;
+      pointer-events: none;
+      z-index: 1000;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col bg-base-100">
+
+  <!-- Navbar -->
+  <div class="navbar bg-base-200 shadow-lg sticky top-0 z-50">
+    <div class="navbar-start">
+      <div class="dropdown">
+        <div tabindex="0" role="button" class="btn btn-ghost lg:hidden">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h8m-8 6h16" />
+          </svg>
+        </div>
+        <ul tabindex="0" class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
+          <li><a href="index.html">Kalendar</a></li>
+          <li><a href="map.html">Mapa</a></li>
+          <li><a href="gallery.html">Galerie</a></li>
+          <li><a href="reserve.html" class="active">Rezervace</a></li>
+          <li><a href="jak-se-zapojit.html">Jak se zapojit</a></li>
+          <li><a href="pravidla.html">Pravidla</a></li>
+        </ul>
+      </div>
+      <a href="index.html" class="btn btn-ghost text-xl gap-2">
+        <span class="text-2xl">🎄</span>
+        <span class="hidden sm:inline font-bold">Adventní Kalendář</span>
+      </a>
+    </div>
+    <div class="navbar-center hidden lg:flex">
+      <ul class="menu menu-horizontal px-1 gap-1">
+        <li><a href="index.html" class="btn btn-ghost btn-sm">Kalendář</a></li>
+        <li><a href="map.html" class="btn btn-ghost btn-sm">Mapa</a></li>
+        <li><a href="gallery.html" class="btn btn-ghost btn-sm">Galerie</a></li>
+        <li><a href="reserve.html" class="btn btn-ghost btn-sm font-semibold bg-primary/10">Rezervace</a></li>
+        <li><a href="jak-se-zapojit.html" class="btn btn-ghost btn-sm">Jak se zapojit</a></li>
+        <li><a href="pravidla.html" class="btn btn-ghost btn-sm">Pravidla</a></li>
+      </ul>
+    </div>
+    <div class="navbar-end gap-2">
+      <a href="admin/dashboard.html" class="btn btn-ghost btn-sm">Admin</a>
+      <div class="dropdown dropdown-end">
+        <div tabindex="0" role="button" class="btn btn-ghost btn-circle avatar placeholder">
+          <div class="bg-primary text-primary-content rounded-full w-10">
+            <span class="text-sm">JN</span>
+          </div>
+        </div>
+        <ul tabindex="0" class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
+          <li class="menu-title"><span>Jan Novák</span></li>
+          <li><a>Odhlásit se</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <main class="flex-1 container mx-auto px-4 py-8">
+
+    <!-- Header -->
+    <div class="text-center mb-8">
+      <h1 class="text-3xl font-bold text-primary mb-2">Rezervace dne</h1>
+      <p class="text-base-content/70 max-w-xl mx-auto">
+        Vyberte si den, kdy váš dům rozsvítí vánoční výzdobu!
+        Můžete si vybrat sami, nebo nechat výběr na náhodě.
+      </p>
+    </div>
+
+    <!-- Your House Info -->
+    <div class="card bg-gradient-to-r from-secondary/10 to-primary/10 border border-secondary/30 shadow-lg mb-8 max-w-2xl mx-auto">
+      <div class="card-body">
+        <div class="flex items-center gap-4">
+          <div class="avatar placeholder">
+            <div class="bg-secondary text-secondary-content rounded-full w-16 h-16">
+              <span class="text-3xl">🏠</span>
+            </div>
+          </div>
+          <div>
+            <h3 class="font-bold text-lg">Váš dům</h3>
+            <p class="text-base-content/70">Pálova 120, Slaný</p>
+            <p class="text-xs text-base-content/50 mt-1">Přiřazen při registraci</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tabs for selection method -->
+    <div class="tabs tabs-boxed justify-center mb-8 bg-base-200 p-1 max-w-md mx-auto">
+      <a class="tab tab-active" onclick="showTab('manual')">🎯 Vybrat den</a>
+      <a class="tab" onclick="showTab('random')">🎲 Náhoda</a>
+    </div>
+
+    <!-- Manual Selection Tab -->
+    <div id="manualTab" class="max-w-4xl mx-auto">
+      <div class="card bg-base-200 shadow-lg">
+        <div class="card-body">
+          <h2 class="card-title justify-center mb-4">
+            <span>📅</span>
+            Vyberte si den
+          </h2>
+
+          <!-- Day Grid -->
+          <div class="grid grid-cols-6 gap-3 md:gap-4">
+            <!-- Reserved days -->
+            <button class="day-slot btn btn-disabled aspect-square text-xl relative reserved" disabled>
+              1
+              <span class="absolute -top-1 -right-1 badge badge-xs badge-error">✓</span>
+            </button>
+            <button class="day-slot btn btn-disabled aspect-square text-xl relative reserved" disabled>
+              2
+              <span class="absolute -top-1 -right-1 badge badge-xs badge-error">✓</span>
+            </button>
+            <button class="day-slot btn btn-disabled aspect-square text-xl relative reserved" disabled>
+              3
+              <span class="absolute -top-1 -right-1 badge badge-xs badge-error">✓</span>
+            </button>
+
+            <!-- Available days -->
+            <button class="day-slot btn btn-outline btn-primary aspect-square text-xl hover:btn-primary" onclick="selectDay(4)">4</button>
+            <button class="day-slot btn btn-outline btn-primary aspect-square text-xl hover:btn-primary" onclick="selectDay(5)">5</button>
+            <button class="day-slot btn btn-outline btn-primary aspect-square text-xl hover:btn-primary" onclick="selectDay(6)">6</button>
+            <button class="day-slot btn btn-outline btn-primary aspect-square text-xl hover:btn-primary" onclick="selectDay(7)">7</button>
+
+            <button class="day-slot btn btn-disabled aspect-square text-xl relative reserved" disabled>
+              8
+              <span class="absolute -top-1 -right-1 badge badge-xs badge-error">✓</span>
+            </button>
+
+            <button class="day-slot btn btn-outline btn-primary aspect-square text-xl hover:btn-primary" onclick="selectDay(9)">9</button>
+            <button class="day-slot btn btn-outline btn-primary aspect-square text-xl hover:btn-primary" onclick="selectDay(10)">10</button>
+            <button class="day-slot btn btn-outline btn-primary aspect-square text-xl hover:btn-primary" onclick="selectDay(11)">11</button>
+            <button class="day-slot btn btn-outline btn-primary aspect-square text-xl hover:btn-primary" onclick="selectDay(12)">12</button>
+            <button class="day-slot btn btn-outline btn-primary aspect-square text-xl hover:btn-primary" onclick="selectDay(13)">13</button>
+
+            <button class="day-slot btn btn-disabled aspect-square text-xl relative reserved" disabled>
+              14
+              <span class="absolute -top-1 -right-1 badge badge-xs badge-error">✓</span>
+            </button>
+
+            <button class="day-slot btn btn-outline btn-primary aspect-square text-xl hover:btn-primary" onclick="selectDay(15)">15</button>
+            <button class="day-slot btn btn-outline btn-primary aspect-square text-xl hover:btn-primary" onclick="selectDay(16)">16</button>
+            <button class="day-slot btn btn-outline btn-primary aspect-square text-xl hover:btn-primary" onclick="selectDay(17)">17</button>
+            <button class="day-slot btn btn-outline btn-primary aspect-square text-xl hover:btn-primary" onclick="selectDay(18)">18</button>
+            <button class="day-slot btn btn-outline btn-primary aspect-square text-xl hover:btn-primary" onclick="selectDay(19)">19</button>
+            <button class="day-slot btn btn-outline btn-primary aspect-square text-xl hover:btn-primary" onclick="selectDay(20)">20</button>
+
+            <button class="day-slot btn btn-disabled aspect-square text-xl relative reserved" disabled>
+              21
+              <span class="absolute -top-1 -right-1 badge badge-xs badge-error">✓</span>
+            </button>
+            <button class="day-slot btn btn-disabled aspect-square text-xl relative reserved" disabled>
+              22
+              <span class="absolute -top-1 -right-1 badge badge-xs badge-error">✓</span>
+            </button>
+
+            <button class="day-slot btn btn-outline btn-primary aspect-square text-xl hover:btn-primary" onclick="selectDay(23)">23</button>
+            <button class="day-slot btn btn-outline btn-secondary aspect-square text-xl hover:btn-secondary font-bold" onclick="selectDay(24)">24 🌟</button>
+          </div>
+
+          <!-- Legend -->
+          <div class="flex flex-wrap justify-center gap-4 mt-6 text-sm">
+            <div class="flex items-center gap-2">
+              <div class="btn btn-xs btn-outline btn-primary pointer-events-none">X</div>
+              <span>Volné</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <div class="btn btn-xs btn-disabled pointer-events-none">X</div>
+              <span>Obsazené</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- Random Selection Tab (hidden by default) -->
+    <div id="randomTab" class="hidden max-w-2xl mx-auto">
+      <div class="card bg-base-200 shadow-lg">
+        <div class="card-body text-center">
+          <h2 class="card-title justify-center mb-4">
+            <span>🎲</span>
+            Kolo štěstí
+          </h2>
+          <p class="text-base-content/70 mb-6">
+            Nechte osud vybrat váš den! Roztočte kolo a zjistěte, který den bude váš.
+          </p>
+
+          <!-- Wheel -->
+          <div class="wheel-container mx-auto mb-6">
+            <div class="relative w-64 h-64 mx-auto">
+              <!-- Pointer -->
+              <div class="absolute -top-4 left-1/2 transform -translate-x-1/2 z-10 text-4xl">▼</div>
+
+              <!-- Wheel -->
+              <div id="wheel" class="wheel w-full h-full rounded-full border-8 border-primary bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center relative overflow-hidden">
+                <div class="absolute inset-4 rounded-full bg-base-100 flex items-center justify-center">
+                  <span id="wheelResult" class="text-5xl font-bold text-primary">?</span>
+                </div>
+                <!-- Wheel segments (decorative) -->
+                <div class="absolute inset-0 flex items-center justify-center">
+                  <div class="grid grid-cols-4 grid-rows-4 gap-1 p-2 opacity-30">
+                    <span>4</span><span>5</span><span>6</span><span>7</span>
+                    <span>9</span><span>10</span><span>11</span><span>12</span>
+                    <span>13</span><span>15</span><span>16</span><span>17</span>
+                    <span>18</span><span>19</span><span>20</span><span>23</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <button onclick="spinWheel()" class="btn btn-primary btn-lg gap-2">
+            <span class="text-xl">🎲</span>
+            Roztočit kolo!
+          </button>
+
+          <p class="text-xs text-base-content/50 mt-4">
+            K dispozici je 16 volných dní
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Confirmation Modal -->
+    <dialog id="confirmModal" class="modal">
+      <div class="modal-box">
+        <h3 class="font-bold text-2xl text-primary mb-4 text-center">Potvrdit rezervaci</h3>
+
+        <div class="flex justify-center mb-6">
+          <div class="avatar placeholder">
+            <div class="bg-primary text-primary-content rounded-full w-24 h-24 ring ring-primary ring-offset-base-100 ring-offset-4">
+              <span id="confirmDay" class="text-4xl font-bold">15</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-base-200 rounded-lg p-4 mb-6">
+          <div class="flex items-center gap-3">
+            <span class="text-2xl">🏠</span>
+            <div>
+              <p class="font-semibold">Pálova 120, Slaný</p>
+              <p class="text-sm text-base-content/60">Váš dům bude součástí kalendáře</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-control mb-6">
+          <label class="label">
+            <span class="label-text font-semibold">Poznámka (nepovinná)</span>
+          </label>
+          <textarea class="textarea textarea-bordered h-24" placeholder="Napište něco o vaší výzdobě nebo odkaz na sebe..."></textarea>
+          <label class="label">
+            <span class="label-text-alt text-base-content/60">Zobrazí se po odhalení vašeho dne</span>
+          </label>
+        </div>
+
+        <div class="modal-action">
+          <form method="dialog">
+            <button class="btn btn-ghost">Zrušit</button>
+          </form>
+          <button class="btn btn-primary gap-2" onclick="confirmReservation()">
+            <span>✓</span>
+            Potvrdit rezervaci
+          </button>
+        </div>
+      </div>
+      <form method="dialog" class="modal-backdrop">
+        <button>close</button>
+      </form>
+    </dialog>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer footer-center p-6 bg-base-200 text-base-content border-t border-base-300">
+    <aside>
+      <p class="text-sm text-base-content/60">© 2026 Sousedský Adventní Kalendář | Pálova, Slaný</p>
+      <p class="text-sm text-base-content/60 mt-1">Vytvořeno s ❤️ pro naši komunitu</p>
+    </aside>
+  </footer>
+
+  <script>
+    let selectedDay = null;
+
+    function showTab(tab) {
+      document.querySelectorAll('.tabs .tab').forEach(t => t.classList.remove('tab-active'));
+      event.target.classList.add('tab-active');
+
+      document.getElementById('manualTab').classList.toggle('hidden', tab !== 'manual');
+      document.getElementById('randomTab').classList.toggle('hidden', tab !== 'random');
+    }
+
+    function selectDay(day) {
+      // Remove previous selection
+      document.querySelectorAll('.day-slot').forEach(slot => {
+        slot.classList.remove('selected', 'btn-primary');
+        if (!slot.disabled) {
+          slot.classList.add('btn-outline');
+        }
+      });
+
+      // Add selection to clicked day
+      event.target.classList.remove('btn-outline');
+      event.target.classList.add('btn-primary', 'selected');
+      selectedDay = day;
+
+      // Show confirmation modal
+      document.getElementById('confirmDay').textContent = day;
+      document.getElementById('confirmModal').showModal();
+    }
+
+    function spinWheel() {
+      const wheel = document.getElementById('wheel');
+      const result = document.getElementById('wheelResult');
+      const availableDays = [4, 5, 6, 7, 9, 10, 11, 12, 13, 15, 16, 17, 18, 19, 20, 23];
+
+      // Random day
+      const randomDay = availableDays[Math.floor(Math.random() * availableDays.length)];
+
+      // Spin animation
+      wheel.style.transform = 'rotate(0deg)';
+      result.textContent = '?';
+
+      setTimeout(() => {
+        wheel.classList.add('spinning');
+      }, 100);
+
+      setTimeout(() => {
+        wheel.classList.remove('spinning');
+        result.textContent = randomDay;
+        selectedDay = randomDay;
+
+        // Show confirmation
+        document.getElementById('confirmDay').textContent = randomDay;
+        document.getElementById('confirmModal').showModal();
+      }, 3100);
+    }
+
+    function confirmReservation() {
+      // In real app, this would submit to server
+      alert('Rezervace dne ' + selectedDay + ' byla úspěšně vytvořena!');
+      document.getElementById('confirmModal').close();
+      window.location.href = 'index.html';
+    }
+  </script>
+
+</body>
+</html>

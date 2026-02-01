@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="cs" data-theme="retro">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pravidla - Adventní Kalendář</title>
+  <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.14/dist/full.min.css" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="min-h-screen flex flex-col bg-base-100">
+
+  <!-- Navbar -->
+  <div class="navbar bg-base-200 shadow-lg sticky top-0 z-50">
+    <div class="navbar-start">
+      <div class="dropdown">
+        <div tabindex="0" role="button" class="btn btn-ghost lg:hidden">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h8m-8 6h16" />
+          </svg>
+        </div>
+        <ul tabindex="0" class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
+          <li><a href="index.html">Kalendar</a></li>
+          <li><a href="map.html">Mapa</a></li>
+          <li><a href="gallery.html">Galerie</a></li>
+          <li><a href="reserve.html">Rezervace</a></li>
+          <li><a href="jak-se-zapojit.html">Jak se zapojit</a></li>
+          <li><a href="pravidla.html" class="active">Pravidla</a></li>
+        </ul>
+      </div>
+      <a href="index.html" class="btn btn-ghost text-xl gap-2">
+        <span class="text-2xl">🎄</span>
+        <span class="hidden sm:inline font-bold">Adventní Kalendář</span>
+      </a>
+    </div>
+    <div class="navbar-center hidden lg:flex">
+      <ul class="menu menu-horizontal px-1 gap-1">
+        <li><a href="index.html" class="btn btn-ghost btn-sm">Kalendář</a></li>
+        <li><a href="map.html" class="btn btn-ghost btn-sm">Mapa</a></li>
+        <li><a href="gallery.html" class="btn btn-ghost btn-sm">Galerie</a></li>
+        <li><a href="reserve.html" class="btn btn-ghost btn-sm">Rezervace</a></li>
+        <li><a href="jak-se-zapojit.html" class="btn btn-ghost btn-sm">Jak se zapojit</a></li>
+        <li><a href="pravidla.html" class="btn btn-ghost btn-sm font-semibold bg-primary/10">Pravidla</a></li>
+      </ul>
+    </div>
+    <div class="navbar-end gap-2">
+      <a href="admin/dashboard.html" class="btn btn-ghost btn-sm">Admin</a>
+      <a href="login.html" class="btn btn-primary btn-sm">Přihlásit se</a>
+    </div>
+  </div>
+
+  <!-- Hero -->
+  <div class="bg-gradient-to-br from-primary/20 via-base-200 to-secondary/20 py-12">
+    <div class="container mx-auto px-4 text-center">
+      <div class="avatar placeholder mb-4">
+        <div class="bg-primary text-primary-content rounded-full w-16 h-16">
+          <span class="text-3xl">📜</span>
+        </div>
+      </div>
+      <h1 class="text-3xl md:text-4xl font-bold text-primary mb-2">Pravidla kalendáře</h1>
+      <p class="text-base-content/70 max-w-xl mx-auto">
+        Aby vše proběhlo hladce a všichni si to užili, prosíme o dodržování
+        těchto jednoduchých pravidel.
+      </p>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <main class="flex-1 container mx-auto px-4 py-8 max-w-4xl">
+
+    <!-- Main Rules -->
+    <div class="grid gap-6 md:grid-cols-2 mb-12">
+
+      <!-- Rule 1 -->
+      <div class="card bg-base-200 shadow-lg">
+        <div class="card-body">
+          <div class="flex items-start gap-4">
+            <div class="avatar placeholder flex-shrink-0">
+              <div class="bg-primary text-primary-content rounded-lg w-12 h-12">
+                <span class="text-xl">1</span>
+              </div>
+            </div>
+            <div>
+              <h3 class="card-title text-lg">Obyvatelé Pálovy ulice a okolí</h3>
+              <p class="text-base-content/70 text-sm mt-1">
+                Zapojit se mohou ti, kteří bydlí na Pálově ulici nebo v blízkém okolí ve Slaném.
+                Každý dům může mít pouze jednu rezervaci.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Rule 2 -->
+      <div class="card bg-base-200 shadow-lg">
+        <div class="card-body">
+          <div class="flex items-start gap-4">
+            <div class="avatar placeholder flex-shrink-0">
+              <div class="bg-secondary text-secondary-content rounded-lg w-12 h-12">
+                <span class="text-xl">2</span>
+              </div>
+            </div>
+            <div>
+              <h3 class="card-title text-lg">Výzdoba viditelná z ulice</h3>
+              <p class="text-base-content/70 text-sm mt-1">
+                Výzdoba musí být vidět z ulice - v okně, na balkóně, nebo na fasádě.
+                Nemusí být velká, stačí i světýlko v okně!
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Rule 3 -->
+      <div class="card bg-base-200 shadow-lg">
+        <div class="card-body">
+          <div class="flex items-start gap-4">
+            <div class="avatar placeholder flex-shrink-0">
+              <div class="bg-accent text-accent-content rounded-lg w-12 h-12">
+                <span class="text-xl">3</span>
+              </div>
+            </div>
+            <div>
+              <h3 class="card-title text-lg">Rozsvítit v den D</h3>
+              <p class="text-base-content/70 text-sm mt-1">
+                V den vaší rezervace musíte mít výzdobu rozsvícenou od soumraku
+                (cca 16:00) do půlnoci. Ideálně i další dny!
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Rule 4 -->
+      <div class="card bg-base-200 shadow-lg">
+        <div class="card-body">
+          <div class="flex items-start gap-4">
+            <div class="avatar placeholder flex-shrink-0">
+              <div class="bg-primary text-primary-content rounded-lg w-12 h-12">
+                <span class="text-xl">4</span>
+              </div>
+            </div>
+            <div>
+              <h3 class="card-title text-lg">Jedna rezervace na osobu</h3>
+              <p class="text-base-content/70 text-sm mt-1">
+                Každý registrovaný uživatel může mít právě jednu rezervaci.
+                Rezervaci lze zrušit a udělat novou, pokud je volný den.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Rule 5 -->
+      <div class="card bg-base-200 shadow-lg">
+        <div class="card-body">
+          <div class="flex items-start gap-4">
+            <div class="avatar placeholder flex-shrink-0">
+              <div class="bg-secondary text-secondary-content rounded-lg w-12 h-12">
+                <span class="text-xl">5</span>
+              </div>
+            </div>
+            <div>
+              <h3 class="card-title text-lg">Focení výzdoby</h3>
+              <p class="text-base-content/70 text-sm mt-1">
+                V průběhu vašeho dne přijdeme nafotit výzdobu do galerie.
+                Pokud s focením nesouhlasíte, dejte nám prosím předem vědět.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Rule 6 -->
+      <div class="card bg-base-200 shadow-lg">
+        <div class="card-body">
+          <div class="flex items-start gap-4">
+            <div class="avatar placeholder flex-shrink-0">
+              <div class="bg-accent text-accent-content rounded-lg w-12 h-12">
+                <span class="text-xl">6</span>
+              </div>
+            </div>
+            <div>
+              <h3 class="card-title text-lg">Respektujme sousedy</h3>
+              <p class="text-base-content/70 text-sm mt-1">
+                Výzdoba by neměla být rušivá (příliš hlučná, blikající, apod.).
+                Myslete na sousedy a jejich klid.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Timeline -->
+    <div class="card bg-base-200 shadow-lg mb-12">
+      <div class="card-body">
+        <h2 class="card-title text-xl text-primary mb-4 flex items-center gap-2">
+          <span>📅</span>
+          Důležité termíny
+        </h2>
+
+        <div class="overflow-x-auto">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Obdobi</th>
+                <th>Co se deje</th>
+                <th>Stav</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="font-semibold">Listopad</td>
+                <td>Registrace účastníků a výběr dní</td>
+                <td><span class="badge badge-success gap-1">✓ Probíhá</span></td>
+              </tr>
+              <tr>
+                <td class="font-semibold">30. listopadu</td>
+                <td>Uzávěrka registrací</td>
+                <td><span class="badge badge-warning gap-1">⏳ Brzy</span></td>
+              </tr>
+              <tr>
+                <td class="font-semibold">1. - 24. prosince</td>
+                <td>Advent! Každý den se odhalí jeden dům</td>
+                <td><span class="badge badge-outline gap-1">📅 Nadchazí</span></td>
+              </tr>
+              <tr>
+                <td class="font-semibold">24. prosince</td>
+                <td>Štědrý večer - poslední okénko</td>
+                <td><span class="badge badge-primary gap-1">🌟 Finale</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tips -->
+    <div class="card bg-gradient-to-r from-secondary/10 to-primary/10 border border-secondary/30 shadow-lg mb-12">
+      <div class="card-body">
+        <h2 class="card-title text-xl text-secondary mb-4 flex items-center gap-2">
+          <span>💡</span>
+          Tipy pro účastníky
+        </h2>
+
+        <div class="grid gap-4 md:grid-cols-2">
+          <div class="flex items-start gap-3">
+            <span class="text-2xl">🎄</span>
+            <div>
+              <h4 class="font-semibold">Nechte se inspirovat</h4>
+              <p class="text-sm text-base-content/70">Prohledněte si galerii z minulých let pro inspiraci.</p>
+            </div>
+          </div>
+          <div class="flex items-start gap-3">
+            <span class="text-2xl">⏰</span>
+            <div>
+              <h4 class="font-semibold">Připravte se včas</h4>
+              <p class="text-sm text-base-content/70">Výzdobu instalujte a otestujte před vaším dnem.</p>
+            </div>
+          </div>
+          <div class="flex items-start gap-3">
+            <span class="text-2xl">🔌</span>
+            <div>
+              <h4 class="font-semibold">Zkontrolujte elektriku</h4>
+              <p class="text-sm text-base-content/70">Používejte venkovní světýlka a prodlužovačky.</p>
+            </div>
+          </div>
+          <div class="flex items-start gap-3">
+            <span class="text-2xl">📸</span>
+            <div>
+              <h4 class="font-semibold">Sdílejte fotky</h4>
+              <p class="text-sm text-base-content/70">Pošlete nám vaše fotky, rádi je zařadíme do galerie.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Important Notice -->
+    <div class="alert bg-base-200 border-l-4 border-primary shadow-lg">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-primary flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+      </svg>
+      <div>
+        <h4 class="font-bold">Důležité upozornění</h4>
+        <p class="text-sm text-base-content/70">
+          Zapojením do kalendáře souhlasíte s tím, že adresa vašeho domu bude
+          zveřejněna na webu po odhalení vašeho dne. Také souhlasíte s nafocením
+          a zveřejněním fotky vaší výzdoby v galerii.
+        </p>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer footer-center p-6 bg-base-200 text-base-content border-t border-base-300">
+    <aside>
+      <p class="text-sm text-base-content/60">© 2026 Sousedský Adventní Kalendář | Pálova, Slaný</p>
+      <p class="text-sm text-base-content/60 mt-1">Vytvořeno s ❤️ pro naši komunitu</p>
+    </aside>
+  </footer>
+
+</body>
+</html>

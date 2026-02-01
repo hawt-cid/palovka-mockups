@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="cs" data-theme="retro">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jak se zapojit - Adventní Kalendář</title>
+  <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.14/dist/full.min.css" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="min-h-screen flex flex-col bg-base-100">
+
+  <!-- Navbar -->
+  <div class="navbar bg-base-200 shadow-lg sticky top-0 z-50">
+    <div class="navbar-start">
+      <div class="dropdown">
+        <div tabindex="0" role="button" class="btn btn-ghost lg:hidden">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h8m-8 6h16" />
+          </svg>
+        </div>
+        <ul tabindex="0" class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
+          <li><a href="index.html">Kalendar</a></li>
+          <li><a href="map.html">Mapa</a></li>
+          <li><a href="gallery.html">Galerie</a></li>
+          <li><a href="reserve.html">Rezervace</a></li>
+          <li><a href="jak-se-zapojit.html" class="active">Jak se zapojit</a></li>
+          <li><a href="pravidla.html">Pravidla</a></li>
+        </ul>
+      </div>
+      <a href="index.html" class="btn btn-ghost text-xl gap-2">
+        <span class="text-2xl">🎄</span>
+        <span class="hidden sm:inline font-bold">Adventní Kalendář</span>
+      </a>
+    </div>
+    <div class="navbar-center hidden lg:flex">
+      <ul class="menu menu-horizontal px-1 gap-1">
+        <li><a href="index.html" class="btn btn-ghost btn-sm">Kalendář</a></li>
+        <li><a href="map.html" class="btn btn-ghost btn-sm">Mapa</a></li>
+        <li><a href="gallery.html" class="btn btn-ghost btn-sm">Galerie</a></li>
+        <li><a href="reserve.html" class="btn btn-ghost btn-sm">Rezervace</a></li>
+        <li><a href="jak-se-zapojit.html" class="btn btn-ghost btn-sm font-semibold bg-primary/10">Jak se zapojit</a></li>
+        <li><a href="pravidla.html" class="btn btn-ghost btn-sm">Pravidla</a></li>
+      </ul>
+    </div>
+    <div class="navbar-end gap-2">
+      <a href="admin/dashboard.html" class="btn btn-ghost btn-sm">Admin</a>
+      <a href="login.html" class="btn btn-primary btn-sm">Přihlásit se</a>
+    </div>
+  </div>
+
+  <!-- Hero -->
+  <div class="bg-gradient-to-br from-secondary/20 via-base-200 to-primary/20 py-12">
+    <div class="container mx-auto px-4 text-center">
+      <div class="avatar placeholder mb-4">
+        <div class="bg-secondary text-secondary-content rounded-full w-16 h-16">
+          <span class="text-3xl">🤝</span>
+        </div>
+      </div>
+      <h1 class="text-3xl md:text-4xl font-bold text-primary mb-2">Jak se zapojit</h1>
+      <p class="text-base-content/70 max-w-xl mx-auto">
+        Chcete být součástí našeho sousedského adventního kalendáře?
+        Je to snadné!
+      </p>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <main class="flex-1 container mx-auto px-4 py-8 max-w-4xl">
+
+    <!-- Steps Timeline -->
+    <div class="mb-12">
+      <h2 class="text-2xl font-bold text-center mb-8 flex items-center justify-center gap-2">
+        <span>📋</span>
+        Kroky k zapojení
+      </h2>
+
+      <ul class="timeline timeline-snap-icon max-md:timeline-compact timeline-vertical">
+        <li>
+          <div class="timeline-middle">
+            <div class="avatar placeholder">
+              <div class="bg-primary text-primary-content rounded-full w-10 h-10">
+                <span class="font-bold">1</span>
+              </div>
+            </div>
+          </div>
+          <div class="timeline-start md:text-end mb-10">
+            <div class="card bg-base-200 shadow-lg">
+              <div class="card-body">
+                <h3 class="card-title text-primary">Kontaktujte organizátora</h3>
+                <p class="text-base-content/70">
+                  Pokud bydlíte na Pálově ulici ve Slaném a chcete se zapojit,
+                  kontaktujte nás. Můžete napsat email nebo se ozvat osobně.
+                </p>
+                <div class="card-actions">
+                  <span class="badge badge-outline">📧 Email</span>
+                  <span class="badge badge-outline">👋 Osobně</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <hr class="bg-primary"/>
+        </li>
+        <li>
+          <hr class="bg-primary"/>
+          <div class="timeline-middle">
+            <div class="avatar placeholder">
+              <div class="bg-secondary text-secondary-content rounded-full w-10 h-10">
+                <span class="font-bold">2</span>
+              </div>
+            </div>
+          </div>
+          <div class="timeline-end mb-10">
+            <div class="card bg-base-200 shadow-lg">
+              <div class="card-body">
+                <h3 class="card-title text-secondary">Obdržíte pozvánku</h3>
+                <p class="text-base-content/70">
+                  Po ověření vaší adresy vám zašleme email s pozvánkou.
+                  Klikněte na odkaz a budete zaregistrováni.
+                </p>
+                <div class="card-actions">
+                  <span class="badge badge-outline">🔗 Magicky odkaz</span>
+                  <span class="badge badge-outline">📱 Bez hesla</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <hr class="bg-secondary"/>
+        </li>
+        <li>
+          <hr class="bg-secondary"/>
+          <div class="timeline-middle">
+            <div class="avatar placeholder">
+              <div class="bg-accent text-accent-content rounded-full w-10 h-10">
+                <span class="font-bold">3</span>
+              </div>
+            </div>
+          </div>
+          <div class="timeline-start md:text-end mb-10">
+            <div class="card bg-base-200 shadow-lg">
+              <div class="card-body">
+                <h3 class="card-title text-accent">Vyberte si den</h3>
+                <p class="text-base-content/70">
+                  Po přihlášení si vyberete den, kdy bude váš dům součástí kalendáře.
+                  Můžete si vybrat ručně, nebo nechat výběr na náhodě!
+                </p>
+                <div class="card-actions">
+                  <span class="badge badge-outline">🎯 Ruční výběr</span>
+                  <span class="badge badge-outline">🎲 Kolo stesti</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <hr class="bg-accent"/>
+        </li>
+        <li>
+          <hr class="bg-accent"/>
+          <div class="timeline-middle">
+            <div class="avatar placeholder">
+              <div class="bg-primary text-primary-content rounded-full w-10 h-10">
+                <span class="font-bold">4</span>
+              </div>
+            </div>
+          </div>
+          <div class="timeline-end mb-10">
+            <div class="card bg-base-200 shadow-lg">
+              <div class="card-body">
+                <h3 class="card-title text-primary">Připravte výzdobu</h3>
+                <p class="text-base-content/70">
+                  Když přijde váš den, rozsvětě výzdobu! Váš dům bude
+                  "odhalen" a všichni sousedi ho mohou obdivovat.
+                </p>
+                <div class="card-actions">
+                  <span class="badge badge-outline">🎄 Světýlka</span>
+                  <span class="badge badge-outline">⭐ Výzdoba</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <!-- FAQ Section -->
+    <div class="mb-12">
+      <h2 class="text-2xl font-bold text-center mb-8 flex items-center justify-center gap-2">
+        <span>❓</span>
+        Časté dotazy
+      </h2>
+
+      <div class="space-y-4">
+        <div class="collapse collapse-plus bg-base-200 shadow">
+          <input type="radio" name="faq-accordion" checked="checked" />
+          <div class="collapse-title text-lg font-medium">
+            Kdo se může zapojit?
+          </div>
+          <div class="collapse-content">
+            <p class="text-base-content/70">
+              Zapojit se mohou všichni obyvatelé Palovy ulice ve Slaném.
+              Stačí mít dům s možností instalace vánoční výzdoby,
+              která bude vidět z ulice.
+            </p>
+          </div>
+        </div>
+
+        <div class="collapse collapse-plus bg-base-200 shadow">
+          <input type="radio" name="faq-accordion" />
+          <div class="collapse-title text-lg font-medium">
+            Co když nemám žádnou výzdobu?
+          </div>
+          <div class="collapse-content">
+            <p class="text-base-content/70">
+              Žádný problém! Stačí i jednoduché světýlka v okně nebo
+              na balkóně. Důležité je, aby bylo něco vidět z ulice.
+              Inspiraci můžete najít v naší galerii z minulých let.
+            </p>
+          </div>
+        </div>
+
+        <div class="collapse collapse-plus bg-base-200 shadow">
+          <input type="radio" name="faq-accordion" />
+          <div class="collapse-title text-lg font-medium">
+            Jak funguje přihlášení bez hesla?
+          </div>
+          <div class="collapse-content">
+            <p class="text-base-content/70">
+              Používáme "magické odkazy". Když se chcete přihlásit,
+              zadejte email a my vám pošleme odkaz. Klikněte na něj
+              a jste přihlášeni. Žádné heslo si nemusíte pamatovat!
+            </p>
+          </div>
+        </div>
+
+        <div class="collapse collapse-plus bg-base-200 shadow">
+          <input type="radio" name="faq-accordion" />
+          <div class="collapse-title text-lg font-medium">
+            Mohu změnit svůj den po rezervaci?
+          </div>
+          <div class="collapse-content">
+            <p class="text-base-content/70">
+              Ano, rezervaci můžete zrušit a vybrat si jiný volný den.
+              Prosíme však o změny včas, aby se ostatní mohli přiřadit.
+            </p>
+          </div>
+        </div>
+
+        <div class="collapse collapse-plus bg-base-200 shadow">
+          <input type="radio" name="faq-accordion" />
+          <div class="collapse-title text-lg font-medium">
+            Co se stane v můj den?
+          </div>
+          <div class="collapse-content">
+            <p class="text-base-content/70">
+              V den, který jste si vybrali, bude váš dům "odhalen" na webu.
+              Sousedé uvidí vaši adresu na mapě a mohou přijít obdivovat
+              vaši výzdobu. V průběhu dne nafotíme váš dům do galerie.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Contact CTA -->
+    <div class="card bg-gradient-to-r from-primary/10 to-secondary/10 border border-primary/30 shadow-lg">
+      <div class="card-body text-center">
+        <div class="flex justify-center mb-4">
+          <div class="avatar placeholder">
+            <div class="bg-primary text-primary-content rounded-full w-16 h-16">
+              <span class="text-3xl">📧</span>
+            </div>
+          </div>
+        </div>
+        <h3 class="text-xl font-bold text-primary mb-2">Máte další otázky?</h3>
+        <p class="text-base-content/70 mb-4">
+          Neváhejte nás kontaktovat. Rádi vám poradíme!
+        </p>
+        <div class="card-actions justify-center">
+          <a href="mailto:kalendar@palova.cz" class="btn btn-primary gap-2">
+            <span>📧</span>
+            kalendar@palova.cz
+          </a>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer footer-center p-6 bg-base-200 text-base-content border-t border-base-300">
+    <aside>
+      <p class="text-sm text-base-content/60">© 2026 Sousedský Adventní Kalendář | Pálova, Slaný</p>
+      <p class="text-sm text-base-content/60 mt-1">Vytvořeno s ❤️ pro naši komunitu</p>
+    </aside>
+  </footer>
+
+</body>
+</html>

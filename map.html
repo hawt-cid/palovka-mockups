@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="cs" data-theme="retro">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mapa - Adventní Kalendář</title>
+  <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.14/dist/full.min.css" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <style>
+    #map {
+      height: 100%;
+      width: 100%;
+      border-radius: 0.5rem;
+    }
+    .custom-div-icon {
+      background: none;
+      border: none;
+    }
+    .leaflet-popup-content-wrapper {
+      border-radius: 0.5rem;
+    }
+    .map-frame {
+      position: relative;
+    }
+    .map-frame::before {
+      content: '';
+      position: absolute;
+      inset: -4px;
+      border: 4px solid;
+      border-image: linear-gradient(135deg, var(--p), var(--s)) 1;
+      border-radius: 1rem;
+      pointer-events: none;
+      z-index: 1000;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col bg-base-100">
+
+  <!-- Navbar -->
+  <div class="navbar bg-base-200 shadow-lg sticky top-0 z-[1001]">
+    <div class="navbar-start">
+      <div class="dropdown">
+        <div tabindex="0" role="button" class="btn btn-ghost lg:hidden">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h8m-8 6h16" />
+          </svg>
+        </div>
+        <ul tabindex="0" class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
+          <li><a href="index.html">Kalendar</a></li>
+          <li><a href="map.html" class="active">Mapa</a></li>
+          <li><a href="gallery.html">Galerie</a></li>
+          <li><a href="reserve.html">Rezervace</a></li>
+          <li><a href="jak-se-zapojit.html">Jak se zapojit</a></li>
+          <li><a href="pravidla.html">Pravidla</a></li>
+        </ul>
+      </div>
+      <a href="index.html" class="btn btn-ghost text-xl gap-2">
+        <span class="text-2xl">🎄</span>
+        <span class="hidden sm:inline font-bold">Adventní Kalendář</span>
+      </a>
+    </div>
+    <div class="navbar-center hidden lg:flex">
+      <ul class="menu menu-horizontal px-1 gap-1">
+        <li><a href="index.html" class="btn btn-ghost btn-sm">Kalendář</a></li>
+        <li><a href="map.html" class="btn btn-ghost btn-sm font-semibold bg-primary/10">Mapa</a></li>
+        <li><a href="gallery.html" class="btn btn-ghost btn-sm">Galerie</a></li>
+        <li><a href="reserve.html" class="btn btn-ghost btn-sm">Rezervace</a></li>
+        <li><a href="jak-se-zapojit.html" class="btn btn-ghost btn-sm">Jak se zapojit</a></li>
+        <li><a href="pravidla.html" class="btn btn-ghost btn-sm">Pravidla</a></li>
+      </ul>
+    </div>
+    <div class="navbar-end gap-2">
+      <a href="admin/dashboard.html" class="btn btn-ghost btn-sm">Admin</a>
+      <a href="login.html" class="btn btn-primary btn-sm">Přihlásit se</a>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <main class="flex-1 flex flex-col">
+
+    <!-- Header -->
+    <div class="bg-gradient-to-r from-primary/10 to-secondary/10 py-6">
+      <div class="container mx-auto px-4 text-center">
+        <h1 class="text-3xl font-bold text-primary mb-2">Mapa kalendáře</h1>
+        <p class="text-base-content/70">
+          Prozkoumejte domy účastníků na mapě. Klikněte na ikonu pro detail.
+        </p>
+      </div>
+    </div>
+
+    <!-- Legend Bar -->
+    <div class="bg-base-200 border-y border-base-300 py-3">
+      <div class="container mx-auto px-4">
+        <div class="flex flex-wrap justify-center items-center gap-6 text-sm">
+          <div class="flex items-center gap-2">
+            <span class="text-2xl">🎄</span>
+            <span>Odhalený dům</span>
+            <span class="badge badge-primary badge-sm">3</span>
+          </div>
+          <div class="divider divider-horizontal hidden sm:flex"></div>
+          <div class="flex items-center gap-2">
+            <span class="text-2xl">🏠</span>
+            <span>Čeká na odhalení</span>
+            <span class="badge badge-secondary badge-sm">5</span>
+          </div>
+          <div class="divider divider-horizontal hidden sm:flex"></div>
+          <div class="flex items-center gap-2">
+            <span class="text-2xl">📍</span>
+            <span>Váš dům</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Map Container -->
+    <div class="container mx-auto px-4 py-6" style="height: 600px;">
+      <div class="card bg-base-200 shadow-xl h-full">
+        <div class="card-body p-4">
+          <div class="map-frame h-full rounded-lg overflow-hidden" style="height: 100%;">
+            <div id="map"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Revealed Houses List -->
+    <div class="bg-base-200 py-8">
+      <div class="container mx-auto px-4">
+        <h2 class="text-xl font-bold text-center mb-6 flex items-center justify-center gap-2">
+          <span>🎄</span>
+          Odhalené domy
+        </h2>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-4xl mx-auto">
+          <!-- Day 1 -->
+          <div class="card bg-base-100 shadow-md hover:shadow-lg transition-shadow cursor-pointer" onclick="focusOnMap(50.2376, 14.0899)">
+            <div class="card-body p-4">
+              <div class="flex items-center gap-3">
+                <div class="avatar placeholder">
+                  <div class="bg-primary text-primary-content rounded-lg w-12 h-12">
+                    <span class="text-xl font-bold">1</span>
+                  </div>
+                </div>
+                <div>
+                  <h3 class="font-semibold">Pálova 1871</h3>
+                  <p class="text-sm text-base-content/60">Jan Novák</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Day 2 -->
+          <div class="card bg-base-100 shadow-md hover:shadow-lg transition-shadow cursor-pointer" onclick="focusOnMap(50.2382, 14.0919)">
+            <div class="card-body p-4">
+              <div class="flex items-center gap-3">
+                <div class="avatar placeholder">
+                  <div class="bg-primary text-primary-content rounded-lg w-12 h-12">
+                    <span class="text-xl font-bold">2</span>
+                  </div>
+                </div>
+                <div>
+                  <h3 class="font-semibold">Pálova 1876</h3>
+                  <p class="text-sm text-base-content/60">Marie Svobodová</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Day 3 -->
+          <div class="card bg-base-100 shadow-md hover:shadow-lg transition-shadow cursor-pointer" onclick="focusOnMap(50.2381, 14.0923)">
+            <div class="card-body p-4">
+              <div class="flex items-center gap-3">
+                <div class="avatar placeholder">
+                  <div class="bg-primary text-primary-content rounded-lg w-12 h-12">
+                    <span class="text-xl font-bold">3</span>
+                  </div>
+                </div>
+                <div>
+                  <h3 class="font-semibold">Pálova 1877</h3>
+                  <p class="text-sm text-base-content/60">Petr Dvořák</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer footer-center p-6 bg-base-200 text-base-content border-t border-base-300">
+    <aside>
+      <p class="text-sm text-base-content/60">© 2026 Sousedský Adventní Kalendář | Pálova, Slaný</p>
+      <p class="text-sm text-base-content/60 mt-1">Vytvořeno s ❤️ pro naši komunitu</p>
+    </aside>
+  </footer>
+
+  <script>
+    // Initialize map
+    const map = L.map('map').setView([50.2373, 14.0914], 17);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '© OpenStreetMap contributors'
+    }).addTo(map);
+
+    // Custom icons
+    const revealedIcon = L.divIcon({
+      html: '<span style="font-size: 32px; filter: drop-shadow(2px 2px 2px rgba(0,0,0,0.3));">🎄</span>',
+      className: 'custom-div-icon',
+      iconSize: [32, 32],
+      iconAnchor: [16, 32],
+      popupAnchor: [0, -32]
+    });
+
+    const hiddenIcon = L.divIcon({
+      html: '<span style="font-size: 28px; filter: drop-shadow(2px 2px 2px rgba(0,0,0,0.3));">🏠</span>',
+      className: 'custom-div-icon',
+      iconSize: [28, 28],
+      iconAnchor: [14, 28],
+      popupAnchor: [0, -28]
+    });
+
+    // Popup styles
+    const popupOptions = {
+      className: 'custom-popup'
+    };
+
+    // Revealed markers
+    L.marker([50.2376, 14.0899], {icon: revealedIcon}).addTo(map)
+      .bindPopup(`
+        <div style="text-align: center; min-width: 180px;">
+          <div style="font-size: 2rem; margin-bottom: 0.5rem;">🎄</div>
+          <strong style="font-size: 1.2rem; color: var(--p);">Den 1</strong>
+          <hr style="margin: 0.5rem 0;">
+          <p style="margin: 0.5rem 0;"><strong>Pálova 1871, Slaný</strong></p>
+          <p style="font-size: 0.9rem; color: #666;">Jan Novák</p>
+          <a href="index.html" style="display: inline-block; margin-top: 0.5rem; padding: 0.25rem 0.75rem; background: var(--p); color: white; border-radius: 0.25rem; text-decoration: none; font-size: 0.8rem;">Zobrazit v kalendáři</a>
+        </div>
+      `);
+
+    L.marker([50.2382, 14.0919], {icon: revealedIcon}).addTo(map)
+      .bindPopup(`
+        <div style="text-align: center; min-width: 180px;">
+          <div style="font-size: 2rem; margin-bottom: 0.5rem;">🎄</div>
+          <strong style="font-size: 1.2rem; color: var(--p);">Den 2</strong>
+          <hr style="margin: 0.5rem 0;">
+          <p style="margin: 0.5rem 0;"><strong>Pálova 1876, Slaný</strong></p>
+          <p style="font-size: 0.9rem; color: #666;">Marie Svobodová</p>
+          <a href="index.html" style="display: inline-block; margin-top: 0.5rem; padding: 0.25rem 0.75rem; background: var(--p); color: white; border-radius: 0.25rem; text-decoration: none; font-size: 0.8rem;">Zobrazit v kalendáři</a>
+        </div>
+      `);
+
+    L.marker([50.2381, 14.0923], {icon: revealedIcon}).addTo(map)
+      .bindPopup(`
+        <div style="text-align: center; min-width: 180px;">
+          <div style="font-size: 2rem; margin-bottom: 0.5rem;">🎄</div>
+          <strong style="font-size: 1.2rem; color: var(--p);">Den 3</strong>
+          <hr style="margin: 0.5rem 0;">
+          <p style="margin: 0.5rem 0;"><strong>Pálova 1877, Slaný</strong></p>
+          <p style="font-size: 0.9rem; color: #666;">Petr Dvořák</p>
+          <a href="index.html" style="display: inline-block; margin-top: 0.5rem; padding: 0.25rem 0.75rem; background: var(--p); color: white; border-radius: 0.25rem; text-decoration: none; font-size: 0.8rem;">Zobrazit v kalendáři</a>
+        </div>
+      `);
+
+    // Hidden markers
+    L.marker([50.2383, 14.0924], {icon: hiddenIcon}).addTo(map)
+      .bindPopup(`
+        <div style="text-align: center; min-width: 150px;">
+          <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">🏠</div>
+          <em style="color: #888;">Registrováný dům</em>
+          <p style="font-size: 0.85rem; color: #999; margin-top: 0.5rem;">Den bude odhalen brzy...</p>
+        </div>
+      `);
+
+    L.marker([50.2384, 14.0925], {icon: hiddenIcon}).addTo(map)
+      .bindPopup(`
+        <div style="text-align: center; min-width: 150px;">
+          <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">🏠</div>
+          <em style="color: #888;">Registrováný dům</em>
+          <p style="font-size: 0.85rem; color: #999; margin-top: 0.5rem;">Den bude odhalen brzy...</p>
+        </div>
+      `);
+
+    L.marker([50.2386, 14.0928], {icon: hiddenIcon}).addTo(map)
+      .bindPopup(`
+        <div style="text-align: center; min-width: 150px;">
+          <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">🏠</div>
+          <em style="color: #888;">Registrováný dům</em>
+          <p style="font-size: 0.85rem; color: #999; margin-top: 0.5rem;">Den bude odhalen brzy...</p>
+        </div>
+      `);
+
+    L.marker([50.2373, 14.0909], {icon: hiddenIcon}).addTo(map)
+      .bindPopup(`
+        <div style="text-align: center; min-width: 150px;">
+          <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">🏠</div>
+          <em style="color: #888;">Registrováný dům</em>
+          <p style="font-size: 0.85rem; color: #999; margin-top: 0.5rem;">Den bude odhalen brzy...</p>
+        </div>
+      `);
+
+    L.marker([50.2369, 14.0910], {icon: hiddenIcon}).addTo(map)
+      .bindPopup(`
+        <div style="text-align: center; min-width: 150px;">
+          <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">🏠</div>
+          <em style="color: #888;">Registrováný dům</em>
+          <p style="font-size: 0.85rem; color: #999; margin-top: 0.5rem;">Den bude odhalen brzy...</p>
+        </div>
+      `);
+
+    function focusOnMap(lat, lng) {
+      map.flyTo([lat, lng], 18);
+    }
+  </script>
+
+</body>
+</html>

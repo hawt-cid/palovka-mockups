@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="cs" data-theme="retro">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Přihlášení úspěšné - Adventní Kalendář</title>
+  <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.14/dist/full.min.css" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .confetti {
+      position: fixed;
+      pointer-events: none;
+      animation: fall 3s linear forwards;
+    }
+    @keyframes fall {
+      0% { transform: translateY(-10vh) rotate(0deg); opacity: 1; }
+      100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+    }
+    .success-icon {
+      animation: pop 0.5s ease-out;
+    }
+    @keyframes pop {
+      0% { transform: scale(0); }
+      50% { transform: scale(1.2); }
+      100% { transform: scale(1); }
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col bg-base-100">
+
+  <!-- Navbar -->
+  <div class="navbar bg-base-200 shadow-lg">
+    <div class="navbar-start">
+      <a href="index.html" class="btn btn-ghost text-xl gap-2">
+        <span class="text-2xl">🎄</span>
+        <span class="hidden sm:inline font-bold">Adventní Kalendář</span>
+      </a>
+    </div>
+    <div class="navbar-end gap-2">
+      <a href="admin/dashboard.html" class="btn btn-ghost btn-sm">Admin</a>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <main class="flex-1 flex items-center justify-center p-4">
+    <div class="w-full max-w-md text-center">
+
+      <!-- Success Icon -->
+      <div class="success-icon mb-6">
+        <div class="avatar placeholder">
+          <div class="bg-success text-success-content rounded-full w-24 h-24">
+            <span class="text-5xl">✓</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Success Message -->
+      <h1 class="text-3xl font-bold text-primary mb-4">Vítejte!</h1>
+      <p class="text-lg text-base-content/70 mb-8">
+        Byli jste úspěšně přihlášeni.
+      </p>
+
+      <!-- User Info Card -->
+      <div class="card bg-base-200 shadow-lg mb-8">
+        <div class="card-body">
+          <div class="flex items-center gap-4">
+            <div class="avatar placeholder">
+              <div class="bg-primary text-primary-content rounded-full w-14 h-14">
+                <span class="text-xl">JN</span>
+              </div>
+            </div>
+            <div class="text-left">
+              <h3 class="font-bold text-lg">Jan Novák</h3>
+              <p class="text-sm text-base-content/60">jan.novak@email.cz</p>
+              <p class="text-xs text-base-content/50 mt-1">Pálova 120, Slaný</p></p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="space-y-3">
+        <a href="index.html" class="btn btn-primary btn-block gap-2">
+          <span>🎄</span>
+          Přejít na kalendář
+        </a>
+        <a href="reserve.html" class="btn btn-outline btn-block gap-2">
+          <span>📅</span>
+          Rezervovat den
+        </a>
+      </div>
+
+      <!-- Auto redirect notice -->
+      <p class="text-sm text-base-content/50 mt-8">
+        Budete automaticky přesměrováni za <span id="countdown">5</span> sekund...
+      </p>
+
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer footer-center p-6 bg-base-200 text-base-content border-t border-base-300">
+    <aside>
+      <p class="text-sm text-base-content/60">© 2026 Sousedský Adventní Kalendář | Pálova, Slaný</p>
+      <p class="text-sm text-base-content/60 mt-1">Vytvořeno s ❤️ pro naši komunitu</p>
+    </aside>
+  </footer>
+
+  <script>
+    // Confetti effect
+    function createConfetti() {
+      const colors = ['🎄', '⭐', '🎁', '❄️', '🔔'];
+      for (let i = 0; i < 30; i++) {
+        setTimeout(() => {
+          const confetti = document.createElement('div');
+          confetti.className = 'confetti';
+          confetti.textContent = colors[Math.floor(Math.random() * colors.length)];
+          confetti.style.left = Math.random() * 100 + 'vw';
+          confetti.style.fontSize = (Math.random() * 20 + 15) + 'px';
+          document.body.appendChild(confetti);
+          setTimeout(() => confetti.remove(), 3000);
+        }, i * 100);
+      }
+    }
+    createConfetti();
+
+    // Countdown
+    let count = 5;
+    const countdown = document.getElementById('countdown');
+    const interval = setInterval(() => {
+      count--;
+      countdown.textContent = count;
+      if (count <= 0) {
+        clearInterval(interval);
+        // window.location.href = 'index.html';
+      }
+    }, 1000);
+  </script>
+
+</body>
+</html>

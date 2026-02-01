@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="cs" data-theme="retro">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Galerie - Adventní Kalendář</title>
+  <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.14/dist/full.min.css" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .photo-card {
+      transition: all 0.3s ease;
+    }
+    .photo-card:hover {
+      transform: translateY(-4px);
+    }
+    .photo-card:hover img {
+      transform: scale(1.05);
+    }
+    .photo-card img {
+      transition: transform 0.3s ease;
+    }
+    .year-timeline {
+      position: relative;
+    }
+    .year-timeline::before {
+      content: '';
+      position: absolute;
+      left: 50%;
+      top: 0;
+      bottom: 0;
+      width: 4px;
+      background: linear-gradient(to bottom, var(--p), var(--s));
+      transform: translateX(-50%);
+    }
+    @media (max-width: 768px) {
+      .year-timeline::before {
+        left: 20px;
+      }
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col bg-base-100">
+
+  <!-- Navbar -->
+  <div class="navbar bg-base-200 shadow-lg sticky top-0 z-50">
+    <div class="navbar-start">
+      <div class="dropdown">
+        <div tabindex="0" role="button" class="btn btn-ghost lg:hidden">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h8m-8 6h16" />
+          </svg>
+        </div>
+        <ul tabindex="0" class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
+          <li><a href="index.html">Kalendar</a></li>
+          <li><a href="map.html">Mapa</a></li>
+          <li><a href="gallery.html" class="active">Galerie</a></li>
+          <li><a href="reserve.html">Rezervace</a></li>
+          <li><a href="jak-se-zapojit.html">Jak se zapojit</a></li>
+          <li><a href="pravidla.html">Pravidla</a></li>
+        </ul>
+      </div>
+      <a href="index.html" class="btn btn-ghost text-xl gap-2">
+        <span class="text-2xl">🎄</span>
+        <span class="hidden sm:inline font-bold">Adventní Kalendář</span>
+      </a>
+    </div>
+    <div class="navbar-center hidden lg:flex">
+      <ul class="menu menu-horizontal px-1 gap-1">
+        <li><a href="index.html" class="btn btn-ghost btn-sm">Kalendář</a></li>
+        <li><a href="map.html" class="btn btn-ghost btn-sm">Mapa</a></li>
+        <li><a href="gallery.html" class="btn btn-ghost btn-sm font-semibold bg-primary/10">Galerie</a></li>
+        <li><a href="reserve.html" class="btn btn-ghost btn-sm">Rezervace</a></li>
+        <li><a href="jak-se-zapojit.html" class="btn btn-ghost btn-sm">Jak se zapojit</a></li>
+        <li><a href="pravidla.html" class="btn btn-ghost btn-sm">Pravidla</a></li>
+      </ul>
+    </div>
+    <div class="navbar-end gap-2">
+      <a href="admin/dashboard.html" class="btn btn-ghost btn-sm">Admin</a>
+      <a href="login.html" class="btn btn-primary btn-sm">Přihlásit se</a>
+    </div>
+  </div>
+
+  <!-- Hero -->
+  <div class="bg-gradient-to-br from-primary/20 via-base-200 to-secondary/20 py-12">
+    <div class="container mx-auto px-4 text-center">
+      <div class="avatar placeholder mb-4">
+        <div class="bg-primary text-primary-content rounded-full w-16 h-16">
+          <span class="text-3xl">📷</span>
+        </div>
+      </div>
+      <h1 class="text-3xl md:text-4xl font-bold text-primary mb-2">Galerie fotek</h1>
+      <p class="text-base-content/70 max-w-xl mx-auto">
+        Prohlédněte si krásné vánoční výzdoby z minulých let.
+        Každý rok je jediný a nezapomenutelný!
+      </p>
+    </div>
+  </div>
+
+  <!-- Year Tabs -->
+  <div class="sticky top-16 z-40 bg-base-100 border-b border-base-300 shadow-sm">
+    <div class="container mx-auto px-4">
+      <div class="tabs tabs-boxed justify-center py-3 bg-transparent">
+        <a class="tab tab-lg tab-active" onclick="showYear(2025)">2025</a>
+        <a class="tab tab-lg" onclick="showYear(2024)">2024</a>
+        <a class="tab tab-lg" onclick="showYear(2023)">2023</a>
+        <a class="tab tab-lg" onclick="showYear(2022)">2022</a>
+        <a class="tab tab-lg" onclick="showYear(2021)">2021</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <main class="flex-1 container mx-auto px-4 py-8">
+
+    <!-- Year 2025 Section -->
+    <div id="year-2025" class="year-section">
+      <!-- Stats -->
+      <div class="stats stats-vertical md:stats-horizontal shadow-lg w-full max-w-2xl mx-auto mb-8 bg-gradient-to-r from-primary/10 to-secondary/10">
+        <div class="stat">
+          <div class="stat-figure text-primary text-3xl">🎄</div>
+          <div class="stat-title">Účastníků</div>
+          <div class="stat-value text-primary">24</div>
+          <div class="stat-desc">Plná účast!</div>
+        </div>
+        <div class="stat">
+          <div class="stat-figure text-secondary text-3xl">📷</div>
+          <div class="stat-title">Fotek</div>
+          <div class="stat-value text-secondary">24</div>
+          <div class="stat-desc">Každý den zachycen</div>
+        </div>
+        <div class="stat">
+          <div class="stat-figure text-accent text-3xl">⭐</div>
+          <div class="stat-title">Rok</div>
+          <div class="stat-value text-accent">5.</div>
+          <div class="stat-desc">Ročník tradice</div>
+        </div>
+      </div>
+
+      <!-- Photo Grid -->
+      <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
+        <!-- Generate 24 photo cards -->
+        <div class="photo-card card bg-base-200 shadow-lg overflow-hidden cursor-pointer" onclick="openLightbox(1, 2025)">
+          <figure class="aspect-square overflow-hidden">
+            <img src="_assets/photos/2024/2024-1.jpg" alt="Den 1" class="w-full h-full object-cover">
+          </figure>
+          <div class="card-body p-3">
+            <div class="flex items-center justify-between">
+              <span class="badge badge-primary badge-sm">Den 1</span>
+              <span class="text-xs text-base-content/60">Pálova 120</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="photo-card card bg-base-200 shadow-lg overflow-hidden cursor-pointer" onclick="openLightbox(2, 2025)">
+          <figure class="aspect-square overflow-hidden">
+            <img src="_assets/photos/2024/2024-2.jpg" alt="Den 2" class="w-full h-full object-cover">
+          </figure>
+          <div class="card-body p-3">
+            <div class="flex items-center justify-between">
+              <span class="badge badge-primary badge-sm">Den 2</span>
+              <span class="text-xs text-base-content/60">Pálova 122</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="photo-card card bg-base-200 shadow-lg overflow-hidden cursor-pointer" onclick="openLightbox(3, 2025)">
+          <figure class="aspect-square overflow-hidden">
+            <img src="_assets/photos/2024/2024-3.jpg" alt="Den 3" class="w-full h-full object-cover">
+          </figure>
+          <div class="card-body p-3">
+            <div class="flex items-center justify-between">
+              <span class="badge badge-primary badge-sm">Den 3</span>
+              <span class="text-xs text-base-content/60">Pálova 124</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="photo-card card bg-base-200 shadow-lg overflow-hidden cursor-pointer" onclick="openLightbox(4, 2025)">
+          <figure class="aspect-square overflow-hidden">
+            <img src="_assets/photos/2024/2024-4.jpg" alt="Den 4" class="w-full h-full object-cover">
+          </figure>
+          <div class="card-body p-3">
+            <div class="flex items-center justify-between">
+              <span class="badge badge-primary badge-sm">Den 4</span>
+              <span class="text-xs text-base-content/60">Pálova 126</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="photo-card card bg-base-200 shadow-lg overflow-hidden cursor-pointer" onclick="openLightbox(5, 2025)">
+          <figure class="aspect-square overflow-hidden">
+            <img src="_assets/photos/2024/2024-5.jpg" alt="Den 5" class="w-full h-full object-cover">
+          </figure>
+          <div class="card-body p-3">
+            <div class="flex items-center justify-between">
+              <span class="badge badge-primary badge-sm">Den 5</span>
+              <span class="text-xs text-base-content/60">Pálova 128</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="photo-card card bg-base-200 shadow-lg overflow-hidden cursor-pointer" onclick="openLightbox(6, 2025)">
+          <figure class="aspect-square overflow-hidden">
+            <img src="_assets/photos/2024/2024-6.jpg" alt="Den 6" class="w-full h-full object-cover">
+          </figure>
+          <div class="card-body p-3">
+            <div class="flex items-center justify-between">
+              <span class="badge badge-primary badge-sm">Den 6</span>
+              <span class="text-xs text-base-content/60">Pálova 130</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="photo-card card bg-base-200 shadow-lg overflow-hidden cursor-pointer" onclick="openLightbox(7, 2025)">
+          <figure class="aspect-square overflow-hidden">
+            <img src="_assets/photos/2024/2024-7.jpg" alt="Den 7" class="w-full h-full object-cover">
+          </figure>
+          <div class="card-body p-3">
+            <div class="flex items-center justify-between">
+              <span class="badge badge-primary badge-sm">Den 7</span>
+              <span class="text-xs text-base-content/60">Pálova 132</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="photo-card card bg-base-200 shadow-lg overflow-hidden cursor-pointer" onclick="openLightbox(8, 2025)">
+          <figure class="aspect-square overflow-hidden">
+            <img src="_assets/photos/2024/2024-8.jpg" alt="Den 8" class="w-full h-full object-cover">
+          </figure>
+          <div class="card-body p-3">
+            <div class="flex items-center justify-between">
+              <span class="badge badge-primary badge-sm">Den 8</span>
+              <span class="text-xs text-base-content/60">Pálova 134</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="photo-card card bg-base-200 shadow-lg overflow-hidden cursor-pointer" onclick="openLightbox(9, 2025)">
+          <figure class="aspect-square overflow-hidden">
+            <img src="_assets/photos/2024/2024-9.jpg" alt="Den 9" class="w-full h-full object-cover">
+          </figure>
+          <div class="card-body p-3">
+            <div class="flex items-center justify-between">
+              <span class="badge badge-primary badge-sm">Den 9</span>
+              <span class="text-xs text-base-content/60">Pálova 136</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="photo-card card bg-base-200 shadow-lg overflow-hidden cursor-pointer" onclick="openLightbox(10, 2025)">
+          <figure class="aspect-square overflow-hidden">
+            <img src="_assets/photos/2024/2024-10.jpg" alt="Den 10" class="w-full h-full object-cover">
+          </figure>
+          <div class="card-body p-3">
+            <div class="flex items-center justify-between">
+              <span class="badge badge-primary badge-sm">Den 10</span>
+              <span class="text-xs text-base-content/60">Pálova 138</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="photo-card card bg-base-200 shadow-lg overflow-hidden cursor-pointer" onclick="openLightbox(11, 2025)">
+          <figure class="aspect-square overflow-hidden">
+            <img src="_assets/photos/2024/2024-11.jpg" alt="Den 11" class="w-full h-full object-cover">
+          </figure>
+          <div class="card-body p-3">
+            <div class="flex items-center justify-between">
+              <span class="badge badge-primary badge-sm">Den 11</span>
+              <span class="text-xs text-base-content/60">Pálova 140</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="photo-card card bg-base-200 shadow-lg overflow-hidden cursor-pointer" onclick="openLightbox(12, 2025)">
+          <figure class="aspect-square overflow-hidden">
+            <img src="_assets/photos/2024/2024-12.jpg" alt="Den 12" class="w-full h-full object-cover">
+          </figure>
+          <div class="card-body p-3">
+            <div class="flex items-center justify-between">
+              <span class="badge badge-primary badge-sm">Den 12</span>
+              <span class="text-xs text-base-content/60">Pálova 142</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Second row of 12 -->
+        <div class="photo-card card bg-base-200 shadow-lg overflow-hidden cursor-pointer" onclick="openLightbox(13, 2025)">
+          <figure class="aspect-square overflow-hidden">
+            <img src="_assets/photos/2024/2024-13.jpg" alt="Den 13" class="w-full h-full object-cover">
+          </figure>
+          <div class="card-body p-3">
+            <div class="flex items-center justify-between">
+              <span class="badge badge-secondary badge-sm">Den 13</span>
+              <span class="text-xs text-base-content/60">Pálova 144</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="photo-card card bg-base-200 shadow-lg overflow-hidden cursor-pointer" onclick="openLightbox(14, 2025)">
+          <figure class="aspect-square overflow-hidden">
+            <img src="_assets/photos/2024/2024-14.jpg" alt="Den 14" class="w-full h-full object-cover">
+          </figure>
+          <div class="card-body p-3">
+            <div class="flex items-center justify-between">
+              <span class="badge badge-secondary badge-sm">Den 14</span>
+              <span class="text-xs text-base-content/60">Pálova 146</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="photo-card card bg-base-200 shadow-lg overflow-hidden cursor-pointer" onclick="openLightbox(15, 2025)">
+          <figure class="aspect-square overflow-hidden">
+            <img src="_assets/photos/2024/2024-15.jpg" alt="Den 15" class="w-full h-full object-cover">
+          </figure>
+          <div class="card-body p-3">
+            <div class="flex items-center justify-between">
+              <span class="badge badge-secondary badge-sm">Den 15</span>
+              <span class="text-xs text-base-content/60">Pálova 148</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="photo-card card bg-base-200 shadow-lg overflow-hidden cursor-pointer" onclick="openLightbox(16, 2025)">
+          <figure class="aspect-square overflow-hidden">
+            <img src="_assets/photos/2024/2024-16.jpg" alt="Den 16" class="w-full h-full object-cover">
+          </figure>
+          <div class="card-body p-3">
+            <div class="flex items-center justify-between">
+              <span class="badge badge-secondary badge-sm">Den 16</span>
+              <span class="text-xs text-base-content/60">Pálova 150</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="photo-card card bg-base-200 shadow-lg overflow-hidden cursor-pointer" onclick="openLightbox(17, 2025)">
+          <figure class="aspect-square overflow-hidden">
+            <img src="_assets/photos/2024/2024-17.jpg" alt="Den 17" class="w-full h-full object-cover">
+          </figure>
+          <div class="card-body p-3">
+            <div class="flex items-center justify-between">
+              <span class="badge badge-secondary badge-sm">Den 17</span>
+              <span class="text-xs text-base-content/60">Pálova 152</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="photo-card card bg-base-200 shadow-lg overflow-hidden cursor-pointer" onclick="openLightbox(18, 2025)">
+          <figure class="aspect-square overflow-hidden">
+            <img src="_assets/photos/2024/2024-18.jpg" alt="Den 18" class="w-full h-full object-cover">
+          </figure>
+          <div class="card-body p-3">
+            <div class="flex items-center justify-between">
+              <span class="badge badge-secondary badge-sm">Den 18</span>
+              <span class="text-xs text-base-content/60">Pálova 154</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="photo-card card bg-base-200 shadow-lg overflow-hidden cursor-pointer" onclick="openLightbox(19, 2025)">
+          <figure class="aspect-square overflow-hidden">
+            <img src="_assets/photos/2024/2024-19.jpg" alt="Den 19" class="w-full h-full object-cover">
+          </figure>
+          <div class="card-body p-3">
+            <div class="flex items-center justify-between">
+              <span class="badge badge-secondary badge-sm">Den 19</span>
+              <span class="text-xs text-base-content/60">Pálova 156</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="photo-card card bg-base-200 shadow-lg overflow-hidden cursor-pointer" onclick="openLightbox(20, 2025)">
+          <figure class="aspect-square overflow-hidden">
+            <img src="_assets/photos/2024/2024-20.jpg" alt="Den 20" class="w-full h-full object-cover">
+          </figure>
+          <div class="card-body p-3">
+            <div class="flex items-center justify-between">
+              <span class="badge badge-secondary badge-sm">Den 20</span>
+              <span class="text-xs text-base-content/60">Pálova 158</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="photo-card card bg-base-200 shadow-lg overflow-hidden cursor-pointer" onclick="openLightbox(21, 2025)">
+          <figure class="aspect-square overflow-hidden">
+            <img src="_assets/photos/2024/2024-21.jpg" alt="Den 21" class="w-full h-full object-cover">
+          </figure>
+          <div class="card-body p-3">
+            <div class="flex items-center justify-between">
+              <span class="badge badge-accent badge-sm">Den 21</span>
+              <span class="text-xs text-base-content/60">Pálova 160</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="photo-card card bg-base-200 shadow-lg overflow-hidden cursor-pointer" onclick="openLightbox(22, 2025)">
+          <figure class="aspect-square overflow-hidden">
+            <img src="_assets/photos/2024/2024-22.jpg" alt="Den 22" class="w-full h-full object-cover">
+          </figure>
+          <div class="card-body p-3">
+            <div class="flex items-center justify-between">
+              <span class="badge badge-accent badge-sm">Den 22</span>
+              <span class="text-xs text-base-content/60">Pálova 162</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="photo-card card bg-base-200 shadow-lg overflow-hidden cursor-pointer" onclick="openLightbox(23, 2025)">
+          <figure class="aspect-square overflow-hidden">
+            <img src="_assets/photos/2024/2024-23.jpg" alt="Den 23" class="w-full h-full object-cover">
+          </figure>
+          <div class="card-body p-3">
+            <div class="flex items-center justify-between">
+              <span class="badge badge-accent badge-sm">Den 23</span>
+              <span class="text-xs text-base-content/60">Pálova 164</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Day 24 - Special -->
+        <div class="photo-card card bg-gradient-to-br from-primary/20 to-secondary/20 shadow-lg overflow-hidden cursor-pointer border-2 border-primary/30" onclick="openLightbox(24, 2025)">
+          <figure class="aspect-square overflow-hidden">
+            <img src="_assets/photos/2024/2024-24.jpg" alt="Den 24" class="w-full h-full object-cover">
+          </figure>
+          <div class="card-body p-3">
+            <div class="flex items-center justify-between">
+              <span class="badge badge-primary badge-sm gap-1">🌟 Den 24</span>
+              <span class="text-xs text-base-content/60">Pálova 166</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Other year sections (hidden by default) -->
+    <div id="year-2024" class="year-section hidden">
+      <div class="text-center py-16">
+        <div class="text-6xl mb-4">📷</div>
+        <h3 class="text-2xl font-bold text-primary mb-2">Rok 2024</h3>
+        <p class="text-base-content/70">22 fotek z 24 dní</p>
+        <p class="text-sm text-base-content/50 mt-4">(Obsah by se načetl dynamicky)</p>
+      </div>
+    </div>
+
+    <div id="year-2023" class="year-section hidden">
+      <div class="text-center py-16">
+        <div class="text-6xl mb-4">📷</div>
+        <h3 class="text-2xl font-bold text-primary mb-2">Rok 2023</h3>
+        <p class="text-base-content/70">22 fotek z 24 dní</p>
+        <p class="text-sm text-base-content/50 mt-4">(Obsah by se načetl dynamicky)</p>
+      </div>
+    </div>
+
+    <div id="year-2022" class="year-section hidden">
+      <div class="text-center py-16">
+        <div class="text-6xl mb-4">📷</div>
+        <h3 class="text-2xl font-bold text-primary mb-2">Rok 2022</h3>
+        <p class="text-base-content/70">21 fotek z 24 dní</p>
+        <p class="text-sm text-base-content/50 mt-4">(Obsah by se načetl dynamicky)</p>
+      </div>
+    </div>
+
+    <div id="year-2021" class="year-section hidden">
+      <div class="text-center py-16">
+        <div class="text-6xl mb-4">📷</div>
+        <h3 class="text-2xl font-bold text-primary mb-2">Rok 2021</h3>
+        <p class="text-base-content/70">19 fotek z 24 dní - první ročník!</p>
+        <p class="text-sm text-base-content/50 mt-4">(Obsah by se načetl dynamicky)</p>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Lightbox Modal -->
+  <dialog id="lightbox" class="modal">
+    <div class="modal-box max-w-4xl">
+      <form method="dialog">
+        <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2 z-10">X</button>
+      </form>
+      <figure class="rounded-lg overflow-hidden mb-4">
+        <img id="lightboxImage" src="" alt="" class="w-full h-auto max-h-[70vh] object-contain">
+      </figure>
+      <div class="flex items-center justify-between">
+        <div>
+          <h3 class="font-bold text-xl text-primary" id="lightboxTitle">Den 1</h3>
+          <p class="text-base-content/70" id="lightboxAddress">Pálova 120, Slaný</p>
+        </div>
+        <div class="flex gap-2">
+          <button class="btn btn-circle btn-outline" onclick="prevPhoto()">❮</button>
+          <button class="btn btn-circle btn-outline" onclick="nextPhoto()">❯</button>
+        </div>
+      </div>
+    </div>
+    <form method="dialog" class="modal-backdrop">
+      <button>close</button>
+    </form>
+  </dialog>
+
+  <!-- Footer -->
+  <footer class="footer footer-center p-6 bg-base-200 text-base-content border-t border-base-300">
+    <aside>
+      <p class="text-sm text-base-content/60">© 2026 Sousedský Adventní Kalendář | Pálova, Slaný</p>
+      <p class="text-sm text-base-content/60 mt-1">Vytvořeno s ❤️ pro naši komunitu</p>
+    </aside>
+  </footer>
+
+  <script>
+    let currentPhoto = 1;
+    let currentYear = 2025;
+
+    function showYear(year) {
+      // Update tabs
+      document.querySelectorAll('.tabs .tab').forEach(t => t.classList.remove('tab-active'));
+      event.target.classList.add('tab-active');
+
+      // Show/hide sections
+      document.querySelectorAll('.year-section').forEach(s => s.classList.add('hidden'));
+      document.getElementById('year-' + year).classList.remove('hidden');
+      currentYear = year;
+    }
+
+    function openLightbox(day, year) {
+      currentPhoto = day;
+      currentYear = year;
+      updateLightbox();
+      document.getElementById('lightbox').showModal();
+    }
+
+    function updateLightbox() {
+      document.getElementById('lightboxImage').src = '_assets/photos/' + currentYear + '/' + currentYear + '-' + currentPhoto + '.jpg';
+      document.getElementById('lightboxTitle').textContent = 'Den ' + currentPhoto;
+      document.getElementById('lightboxAddress').textContent = 'Palova ' + (118 + currentPhoto * 2) + ', Slaný';
+    }
+
+    function prevPhoto() {
+      currentPhoto = currentPhoto > 1 ? currentPhoto - 1 : 24;
+      updateLightbox();
+    }
+
+    function nextPhoto() {
+      currentPhoto = currentPhoto < 24 ? currentPhoto + 1 : 1;
+      updateLightbox();
+    }
+
+    // Keyboard navigation
+    document.addEventListener('keydown', (e) => {
+      if (document.getElementById('lightbox').open) {
+        if (e.key === 'ArrowLeft') prevPhoto();
+        if (e.key === 'ArrowRight') nextPhoto();
+        if (e.key === 'Escape') document.getElementById('lightbox').close();
+      }
+    });
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="cs" data-theme="retro">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Adventní Kalendář - Pálova, Slaný</title>
+  <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.14/dist/full.min.css" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    /* Advent door effect */
+    .advent-door {
+      perspective: 1000px;
+      cursor: pointer;
+    }
+    .advent-door .door-front {
+      transition: transform 0.6s;
+      transform-style: preserve-3d;
+      backface-visibility: hidden;
+    }
+    .advent-door.revealed .door-front {
+      transform: rotateY(-110deg);
+      transform-origin: left;
+    }
+    .advent-door .door-back {
+      position: absolute;
+      inset: 0;
+      backface-visibility: hidden;
+    }
+    /* Snowfall animation */
+    .snowflake {
+      position: fixed;
+      top: -10px;
+      animation: fall linear forwards;
+      pointer-events: none;
+      z-index: 1000;
+      opacity: 0.7;
+    }
+    @keyframes fall {
+      to { transform: translateY(100vh) rotate(360deg); }
+    }
+    /* Glow effect for today */
+    .today-glow {
+      animation: glow 2s ease-in-out infinite alternate;
+    }
+    @keyframes glow {
+      from { box-shadow: 0 0 5px var(--p), 0 0 10px var(--p); }
+      to { box-shadow: 0 0 20px var(--p), 0 0 30px var(--p); }
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col bg-base-100">
+
+  <!-- Navbar -->
+  <div class="navbar bg-base-200 shadow-lg sticky top-0 z-50">
+    <div class="navbar-start">
+      <div class="dropdown">
+        <div tabindex="0" role="button" class="btn btn-ghost lg:hidden">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h8m-8 6h16" />
+          </svg>
+        </div>
+        <ul tabindex="0" class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
+          <li><a href="index.html" class="active">Kalendář</a></li>
+          <li><a href="map.html">Mapa</a></li>
+          <li><a href="gallery.html">Galerie</a></li>
+          <li><a href="reserve.html">Rezervace</a></li>
+          <li><a href="jak-se-zapojit.html">Jak se zapojit</a></li>
+          <li><a href="pravidla.html">Pravidla</a></li>
+        </ul>
+      </div>
+      <a href="index.html" class="btn btn-ghost text-xl gap-2">
+        <span class="text-2xl">🎄</span>
+        <span class="hidden sm:inline font-bold">Adventní Kalendář</span>
+      </a>
+    </div>
+    <div class="navbar-center hidden lg:flex">
+      <ul class="menu menu-horizontal px-1 gap-1">
+        <li><a href="index.html" class="btn btn-ghost btn-sm font-semibold bg-primary/10">Kalendář</a></li>
+        <li><a href="map.html" class="btn btn-ghost btn-sm">Mapa</a></li>
+        <li><a href="gallery.html" class="btn btn-ghost btn-sm">Galerie</a></li>
+        <li><a href="reserve.html" class="btn btn-ghost btn-sm">Rezervace</a></li>
+        <li><a href="jak-se-zapojit.html" class="btn btn-ghost btn-sm">Jak se zapojit</a></li>
+        <li><a href="pravidla.html" class="btn btn-ghost btn-sm">Pravidla</a></li>
+      </ul>
+    </div>
+    <div class="navbar-end gap-2">
+      <a href="admin/dashboard.html" class="btn btn-ghost btn-sm">Admin</a>
+      <a href="login.html" class="btn btn-primary btn-sm">Přihlásit se</a>
+    </div>
+  </div>
+
+  <!-- Hero Section -->
+  <div class="hero py-12" style="background: linear-gradient(rgba(0,0,0,0.65), rgba(0,0,0,0.65)), url('_assets/banner.jpg') center/cover no-repeat;">
+    <div class="hero-content text-center" style="color: white !important;">
+      <div class="max-w-2xl">
+        <div class="flex justify-center mb-4">
+          <div class="avatar placeholder">
+            <div class="bg-primary text-primary-content rounded-full w-20 h-20 ring ring-primary ring-offset-base-100 ring-offset-4">
+              <span class="text-4xl">🎄</span>
+            </div>
+          </div>
+        </div>
+        <h1 class="text-4xl md:text-5xl font-bold text-primary mb-4">
+          Sousedský Adventní Kalendář
+        </h1>
+        <p class="text-xl mb-2" style="color: white !important;">Pálova ulice, Slaný</p>
+        <div class="badge badge-lg badge-secondary gap-2 mb-6">
+          <span>2026</span>
+        </div>
+        <p class="text-lg" style="color: white !important;">
+          Každý den od 1. do 24. prosince se otevře jedno okénko -
+          jeden dům v naší ulici rozsvítí svou vánoční výzdobu!
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Status Banner -->
+  <div class="bg-secondary text-secondary-content py-3">
+    <div class="container mx-auto px-4 flex flex-wrap justify-center items-center gap-4 text-center">
+      <div class="flex items-center gap-2">
+        <span class="loading loading-ring loading-sm"></span>
+        <span class="font-semibold">Registrace probíhá!</span>
+      </div>
+      <div class="divider divider-horizontal hidden sm:flex"></div>
+      <div class="stats stats-horizontal bg-secondary-content/10 shadow-sm">
+        <div class="stat py-2 px-4">
+          <div class="stat-title text-secondary-content/70 text-xs">Obsazeno</div>
+          <div class="stat-value text-lg">8</div>
+        </div>
+        <div class="stat py-2 px-4">
+          <div class="stat-title text-secondary-content/70 text-xs">Volných</div>
+          <div class="stat-value text-lg text-accent">16</div>
+        </div>
+      </div>
+      <a href="reserve.html" class="btn btn-accent btn-sm">Rezervovat den</a>
+    </div>
+  </div>
+
+  <!-- Main Content - Advent Calendar Grid -->
+  <main class="flex-1 container mx-auto px-4 py-8">
+
+    <!-- User's Reservation Card (shown when logged in) -->
+    <div class="alert bg-gradient-to-r from-primary/10 to-secondary/10 border border-primary/30 mb-8 shadow-lg">
+      <div class="flex flex-wrap items-center gap-4 w-full">
+        <div class="avatar placeholder">
+          <div class="bg-primary text-primary-content rounded-full w-14 h-14">
+            <span class="text-2xl">🏠</span>
+          </div>
+        </div>
+        <div class="flex-1">
+          <h3 class="font-bold text-lg">Vaše rezervace: Den 15</h3>
+          <p class="text-sm text-base-content/70">Pálova 120, Slaný</p>
+        </div>
+        <div class="flex gap-2">
+          <button class="btn btn-outline btn-sm">Upravit poznámku</button>
+          <button class="btn btn-error btn-outline btn-sm">Zrušit</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Calendar Title -->
+    <div class="text-center mb-8">
+      <h2 class="text-2xl font-bold text-base-content flex items-center justify-center gap-3">
+        <span>🕯️</span>
+        <span>Adventní Okénka</span>
+        <span>🕯️</span>
+      </h2>
+      <p class="text-base-content/60 mt-2">Klikni na odhalené okénko pro detail</p>
+    </div>
+
+    <!-- Advent Calendar Grid - 6x4 layout -->
+    <div class="grid grid-cols-4 sm:grid-cols-6 gap-3 md:gap-4 max-w-4xl mx-auto">
+
+      <!-- Day 1 - Revealed -->
+      <div class="advent-door revealed card bg-base-200 aspect-square overflow-hidden shadow-lg hover:shadow-xl transition-shadow" onclick="openModal(1)">
+        <div class="door-back absolute inset-0 bg-gradient-to-br from-primary to-secondary flex items-center justify-center">
+          <img src="_assets/photos/2024/2024-1.jpg" alt="Den 1" class="w-full h-full object-cover">
+          <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-2">
+            <span class="text-white font-bold text-lg">1</span>
+          </div>
+        </div>
+        <div class="door-front absolute inset-0 bg-primary flex items-center justify-center">
+          <span class="text-4xl md:text-5xl font-bold text-primary-content">1</span>
+        </div>
+      </div>
+
+      <!-- Day 2 - Revealed -->
+      <div class="advent-door revealed card bg-base-200 aspect-square overflow-hidden shadow-lg hover:shadow-xl transition-shadow" onclick="openModal(2)">
+        <div class="door-back absolute inset-0 bg-gradient-to-br from-primary to-secondary flex items-center justify-center">
+          <img src="_assets/photos/2024/2024-2.jpg" alt="Den 2" class="w-full h-full object-cover">
+          <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-2">
+            <span class="text-white font-bold text-lg">2</span>
+          </div>
+        </div>
+        <div class="door-front absolute inset-0 bg-secondary flex items-center justify-center">
+          <span class="text-4xl md:text-5xl font-bold text-secondary-content">2</span>
+        </div>
+      </div>
+
+      <!-- Day 3 - Revealed -->
+      <div class="advent-door revealed card bg-base-200 aspect-square overflow-hidden shadow-lg hover:shadow-xl transition-shadow" onclick="openModal(3)">
+        <div class="door-back absolute inset-0">
+          <img src="_assets/photos/2024/2024-3.jpg" alt="Den 3" class="w-full h-full object-cover">
+          <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-2">
+            <span class="text-white font-bold text-lg">3</span>
+          </div>
+        </div>
+        <div class="door-front absolute inset-0 bg-accent flex items-center justify-center">
+          <span class="text-4xl md:text-5xl font-bold text-accent-content">3</span>
+        </div>
+      </div>
+
+      <!-- Day 4 - Today (glowing) -->
+      <div class="advent-door card bg-primary aspect-square overflow-hidden shadow-lg today-glow cursor-not-allowed" title="Dnesni okenko - bude odhaleno vecer!">
+        <div class="h-full flex flex-col items-center justify-center">
+          <span class="text-4xl md:text-5xl font-bold text-primary-content">4</span>
+          <span class="badge badge-sm mt-2">DNES</span>
+        </div>
+      </div>
+
+      <!-- Days 5-24 - Unrevealed -->
+      <div class="card bg-base-300 aspect-square overflow-hidden shadow hover:shadow-lg transition-shadow cursor-not-allowed opacity-70">
+        <div class="h-full flex items-center justify-center">
+          <span class="text-3xl md:text-4xl font-bold text-base-content/40">5</span>
+        </div>
+      </div>
+
+      <div class="card bg-base-300 aspect-square overflow-hidden shadow hover:shadow-lg transition-shadow cursor-not-allowed opacity-70">
+        <div class="h-full flex items-center justify-center">
+          <span class="text-3xl md:text-4xl font-bold text-base-content/40">6</span>
+        </div>
+      </div>
+
+      <div class="card bg-base-300 aspect-square overflow-hidden shadow cursor-not-allowed opacity-70">
+        <div class="h-full flex items-center justify-center">
+          <span class="text-3xl md:text-4xl font-bold text-base-content/40">7</span>
+        </div>
+      </div>
+
+      <div class="card bg-base-300 aspect-square overflow-hidden shadow cursor-not-allowed opacity-70">
+        <div class="h-full flex items-center justify-center">
+          <span class="text-3xl md:text-4xl font-bold text-base-content/40">8</span>
+        </div>
+      </div>
+
+      <div class="card bg-base-300 aspect-square overflow-hidden shadow cursor-not-allowed opacity-70">
+        <div class="h-full flex items-center justify-center">
+          <span class="text-3xl md:text-4xl font-bold text-base-content/40">9</span>
+        </div>
+      </div>
+
+      <div class="card bg-base-300 aspect-square overflow-hidden shadow cursor-not-allowed opacity-70">
+        <div class="h-full flex items-center justify-center">
+          <span class="text-3xl md:text-4xl font-bold text-base-content/40">10</span>
+        </div>
+      </div>
+
+      <div class="card bg-base-300 aspect-square overflow-hidden shadow cursor-not-allowed opacity-70">
+        <div class="h-full flex items-center justify-center">
+          <span class="text-3xl md:text-4xl font-bold text-base-content/40">11</span>
+        </div>
+      </div>
+
+      <div class="card bg-base-300 aspect-square overflow-hidden shadow cursor-not-allowed opacity-70">
+        <div class="h-full flex items-center justify-center">
+          <span class="text-3xl md:text-4xl font-bold text-base-content/40">12</span>
+        </div>
+      </div>
+
+      <div class="card bg-base-300 aspect-square overflow-hidden shadow cursor-not-allowed opacity-70">
+        <div class="h-full flex items-center justify-center">
+          <span class="text-3xl md:text-4xl font-bold text-base-content/40">13</span>
+        </div>
+      </div>
+
+      <div class="card bg-base-300 aspect-square overflow-hidden shadow cursor-not-allowed opacity-70">
+        <div class="h-full flex items-center justify-center">
+          <span class="text-3xl md:text-4xl font-bold text-base-content/40">14</span>
+        </div>
+      </div>
+
+      <!-- Day 15 - Reserved by user (highlight) -->
+      <div class="card bg-accent/30 border-2 border-accent aspect-square overflow-hidden shadow cursor-not-allowed">
+        <div class="h-full flex flex-col items-center justify-center">
+          <span class="text-3xl md:text-4xl font-bold text-accent">15</span>
+          <span class="text-xs text-accent mt-1">MOJE</span>
+        </div>
+      </div>
+
+      <div class="card bg-base-300 aspect-square overflow-hidden shadow cursor-not-allowed opacity-70">
+        <div class="h-full flex items-center justify-center">
+          <span class="text-3xl md:text-4xl font-bold text-base-content/40">16</span>
+        </div>
+      </div>
+
+      <div class="card bg-base-300 aspect-square overflow-hidden shadow cursor-not-allowed opacity-70">
+        <div class="h-full flex items-center justify-center">
+          <span class="text-3xl md:text-4xl font-bold text-base-content/40">17</span>
+        </div>
+      </div>
+
+      <div class="card bg-base-300 aspect-square overflow-hidden shadow cursor-not-allowed opacity-70">
+        <div class="h-full flex items-center justify-center">
+          <span class="text-3xl md:text-4xl font-bold text-base-content/40">18</span>
+        </div>
+      </div>
+
+      <div class="card bg-base-300 aspect-square overflow-hidden shadow cursor-not-allowed opacity-70">
+        <div class="h-full flex items-center justify-center">
+          <span class="text-3xl md:text-4xl font-bold text-base-content/40">19</span>
+        </div>
+      </div>
+
+      <div class="card bg-base-300 aspect-square overflow-hidden shadow cursor-not-allowed opacity-70">
+        <div class="h-full flex items-center justify-center">
+          <span class="text-3xl md:text-4xl font-bold text-base-content/40">20</span>
+        </div>
+      </div>
+
+      <div class="card bg-base-300 aspect-square overflow-hidden shadow cursor-not-allowed opacity-70">
+        <div class="h-full flex items-center justify-center">
+          <span class="text-3xl md:text-4xl font-bold text-base-content/40">21</span>
+        </div>
+      </div>
+
+      <div class="card bg-base-300 aspect-square overflow-hidden shadow cursor-not-allowed opacity-70">
+        <div class="h-full flex items-center justify-center">
+          <span class="text-3xl md:text-4xl font-bold text-base-content/40">22</span>
+        </div>
+      </div>
+
+      <div class="card bg-base-300 aspect-square overflow-hidden shadow cursor-not-allowed opacity-70">
+        <div class="h-full flex items-center justify-center">
+          <span class="text-3xl md:text-4xl font-bold text-base-content/40">23</span>
+        </div>
+      </div>
+
+      <!-- Day 24 - Special (Christmas Eve) -->
+      <div class="card bg-gradient-to-br from-primary/20 to-secondary/20 border-2 border-dashed border-primary/30 aspect-square overflow-hidden shadow cursor-not-allowed">
+        <div class="h-full flex flex-col items-center justify-center">
+          <span class="text-3xl md:text-4xl font-bold text-primary">24</span>
+          <span class="text-xs text-primary mt-1">🌟</span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Legend -->
+    <div class="flex flex-wrap justify-center gap-4 mt-8 text-sm">
+      <div class="flex items-center gap-2">
+        <div class="w-4 h-4 rounded bg-primary"></div>
+        <span>Odhaleno</span>
+      </div>
+      <div class="flex items-center gap-2">
+        <div class="w-4 h-4 rounded bg-base-300 opacity-70"></div>
+        <span>Čeká na odhalení</span>
+      </div>
+      <div class="flex items-center gap-2">
+        <div class="w-4 h-4 rounded bg-accent/30 border-2 border-accent"></div>
+        <span>Vaše rezervace</span>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Modal for revealed day detail -->
+  <dialog id="dayModal" class="modal">
+    <div class="modal-box max-w-2xl">
+      <form method="dialog">
+        <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">X</button>
+      </form>
+      <h3 class="font-bold text-2xl text-primary mb-4" id="modalTitle">Den 1</h3>
+      <figure class="rounded-lg overflow-hidden mb-4">
+        <img id="modalImage" src="" alt="" class="w-full h-64 object-cover">
+      </figure>
+      <div class="flex items-center gap-3 mb-4">
+        <div class="avatar placeholder">
+          <div class="bg-secondary text-secondary-content rounded-full w-10">
+            <span>🏠</span>
+          </div>
+        </div>
+        <div>
+          <p class="font-semibold" id="modalAddress">Pálova 1871, Slaný</p>
+          <p class="text-sm text-base-content/60" id="modalOwner">Jan Novák</p>
+        </div>
+      </div>
+      <p class="text-base-content/70" id="modalNote">Děkujeme všem za návštěvu! Bylo nám ctí být součástí tohoto krásného projektu.</p>
+      <div class="modal-action">
+        <a href="map.html" class="btn btn-outline btn-sm">Zobrazit na mapě</a>
+        <form method="dialog">
+          <button class="btn btn-primary">Zavřít</button>
+        </form>
+      </div>
+    </div>
+    <form method="dialog" class="modal-backdrop">
+      <button>close</button>
+    </form>
+  </dialog>
+
+  <!-- Footer -->
+  <footer class="footer footer-center p-8 bg-base-200 text-base-content border-t border-base-300">
+    <aside>
+      <div class="flex items-center gap-2 mb-2">
+        <span class="text-2xl">🎄</span>
+        <span class="font-bold">Sousedský Adventní Kalendář</span>
+        <span class="text-2xl">🎄</span>
+      </div>
+      <p>Pálova ulice, Slaný | 2026</p>
+      <p class="text-sm text-base-content/60 mt-2">Vytvořeno s ❤️ pro naši komunitu</p>
+    </aside>
+    <nav>
+      <a href="admin/dashboard.html" class="link link-hover text-xs text-base-content/40">Administrace</a>
+    </nav>
+  </footer>
+
+  <script>
+    function openModal(day) {
+      const modal = document.getElementById('dayModal');
+      document.getElementById('modalTitle').textContent = 'Den ' + day;
+      document.getElementById('modalImage').src = '_assets/photos/2024/2024-' + day + '.jpg';
+      modal.showModal();
+    }
+
+    // Snowfall effect
+    function createSnowflake() {
+      const snowflake = document.createElement('div');
+      snowflake.className = 'snowflake';
+      snowflake.innerHTML = ['❄', '❅', '❆'][Math.floor(Math.random() * 3)];
+      snowflake.style.left = Math.random() * 100 + 'vw';
+      snowflake.style.animationDuration = (Math.random() * 3 + 4) + 's';
+      snowflake.style.fontSize = (Math.random() * 10 + 10) + 'px';
+      document.body.appendChild(snowflake);
+      setTimeout(() => snowflake.remove(), 7000);
+    }
+    // Create snowflakes periodically
+    setInterval(createSnowflake, 800);
+  </script>
+
+</body>
+</html>

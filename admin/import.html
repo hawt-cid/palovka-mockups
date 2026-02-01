@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="cs" data-theme="retro">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Import adres - Admin</title>
+  <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.14/dist/full.min.css" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="min-h-screen flex bg-base-100">
+
+  <!-- Sidebar -->
+  <aside class="w-64 bg-base-200 border-r border-base-300 hidden lg:flex flex-col">
+    <div class="p-4 border-b border-base-300">
+      <a href="../index.html" class="flex items-center gap-2 text-xl font-bold">
+        <span class="text-2xl">🎄</span>
+        <span>Admin</span>
+      </a>
+    </div>
+    <ul class="menu p-4 flex-1">
+      <li><a href="dashboard.html">📊 Dashboard</a></li>
+      <li><a href="years.html">📅 Ročníky</a></li>
+      <li><a href="users.html">👥 Uživatelé</a></li>
+      <li><a href="houses.html">🏠 Domy</a></li>
+      <li><a href="import.html" class="active font-semibold">📥 Import adres</a></li>
+      <li><a href="invite.html">✉️ Pozvat</a></li>
+      <li><a href="photos.html">📷 Fotky</a></li>
+      <div class="divider"></div>
+      <li><a href="../index.html">← Zpět na web</a></li>
+    </ul>
+  </aside>
+
+  <!-- Main Content -->
+  <div class="flex-1 flex flex-col">
+
+    <!-- Top Bar (mobile) -->
+    <div class="navbar bg-base-200 border-b border-base-300 lg:hidden">
+      <div class="navbar-start">
+        <div class="dropdown">
+          <div tabindex="0" role="button" class="btn btn-ghost">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h8m-8 6h16" />
+            </svg>
+          </div>
+          <ul tabindex="0" class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
+            <li><a href="dashboard.html">📊 Dashboard</a></li>
+            <li><a href="years.html">📅 Ročníky</a></li>
+            <li><a href="users.html">👥 Uživatelé</a></li>
+            <li><a href="houses.html">🏠 Domy</a></li>
+            <li><a href="import.html" class="active">📥 Import</a></li>
+            <li><a href="invite.html">✉️ Pozvat</a></li>
+            <li><a href="photos.html">📷 Fotky</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="navbar-center">
+        <span class="text-xl font-bold">Import adres</span>
+      </div>
+    </div>
+
+    <!-- Page Content -->
+    <main class="flex-1 p-4 lg:p-8 overflow-auto">
+
+      <!-- Page Header -->
+      <div class="mb-8">
+        <h1 class="text-2xl font-bold text-primary">Import adres z OpenStreetMap</h1>
+        <p class="text-base-content/60">Hromadný import adres pomocí Overpass API</p>
+      </div>
+
+      <div class="grid lg:grid-cols-2 gap-8">
+
+        <!-- Import Form -->
+        <div class="card bg-base-200 shadow-lg">
+          <div class="card-body">
+            <h2 class="card-title text-lg flex items-center gap-2">
+              <span>🗺️</span>
+              Parametry dotazu
+            </h2>
+
+            <div class="form-control mt-4">
+              <label class="label">
+                <span class="label-text font-semibold">Název ulice</span>
+              </label>
+              <input type="text" value="Pálova" class="input input-bordered" placeholder="Pálova" />
+            </div>
+
+            <div class="form-control mt-4">
+              <label class="label">
+                <span class="label-text font-semibold">Oblast (bounding box)</span>
+              </label>
+              <div class="grid grid-cols-2 gap-2">
+                <input type="text" value="50.23" class="input input-bordered input-sm" placeholder="Min lat" />
+                <input type="text" value="14.08" class="input input-bordered input-sm" placeholder="Min lon" />
+                <input type="text" value="50.25" class="input input-bordered input-sm" placeholder="Max lat" />
+                <input type="text" value="14.12" class="input input-bordered input-sm" placeholder="Max lon" />
+              </div>
+              <label class="label">
+                <span class="label-text-alt text-base-content/60">Souřadnice pro Slaný: 50.23-50.25, 14.08-14.12</span>
+              </label>
+            </div>
+
+            <div class="form-control mt-4">
+              <label class="label">
+                <span class="label-text font-semibold">Overpass dotaz (preview)</span>
+              </label>
+              <div class="mockup-code text-xs">
+                <pre><code>[out:json][timeout:25];
+way["street"="Pálova"](50.23,14.08,50.25,14.12);
+out tags;</code></pre>
+              </div>
+            </div>
+
+            <div class="card-actions mt-6">
+              <button class="btn btn-primary gap-2 flex-1">
+                <span>🔍</span>
+                Vyhledat adresy
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Results Preview -->
+        <div class="card bg-base-200 shadow-lg">
+          <div class="card-body">
+            <h2 class="card-title text-lg flex items-center gap-2">
+              <span>📋</span>
+              Výsledky vyhledávání
+            </h2>
+
+            <div class="alert bg-success/10 border border-success/30 mt-4">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-success" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              <div>
+                <span class="font-semibold">Nalezeno 15 adres</span>
+                <p class="text-sm text-base-content/70">8 nových, 7 už existuje</p>
+              </div>
+            </div>
+
+            <div class="overflow-x-auto mt-4 max-h-64">
+              <table class="table table-xs">
+                <thead>
+                  <tr>
+                    <th>
+                      <input type="checkbox" class="checkbox checkbox-sm" checked />
+                    </th>
+                    <th>Adresa</th>
+                    <th>GPS</th>
+                    <th>Stav</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="hover:bg-primary/5">
+                    <td><input type="checkbox" class="checkbox checkbox-sm" checked /></td>
+                    <td>Palova 150</td>
+                    <td class="text-xs text-base-content/60">50.2380, 14.0920</td>
+                    <td><span class="badge badge-success badge-xs">nova</span></td>
+                  </tr>
+                  <tr class="hover:bg-primary/5">
+                    <td><input type="checkbox" class="checkbox checkbox-sm" checked /></td>
+                    <td>Palova 152</td>
+                    <td class="text-xs text-base-content/60">50.2381, 14.0921</td>
+                    <td><span class="badge badge-success badge-xs">nova</span></td>
+                  </tr>
+                  <tr class="hover:bg-primary/5">
+                    <td><input type="checkbox" class="checkbox checkbox-sm" checked /></td>
+                    <td>Palova 154</td>
+                    <td class="text-xs text-base-content/60">50.2382, 14.0922</td>
+                    <td><span class="badge badge-success badge-xs">nova</span></td>
+                  </tr>
+                  <tr class="hover:bg-primary/5 opacity-50">
+                    <td><input type="checkbox" class="checkbox checkbox-sm" disabled /></td>
+                    <td>Palova 120</td>
+                    <td class="text-xs text-base-content/60">50.2376, 14.0899</td>
+                    <td><span class="badge badge-ghost badge-xs">existuje</span></td>
+                  </tr>
+                  <tr class="hover:bg-primary/5 opacity-50">
+                    <td><input type="checkbox" class="checkbox checkbox-sm" disabled /></td>
+                    <td>Palova 122</td>
+                    <td class="text-xs text-base-content/60">50.2377, 14.0900</td>
+                    <td><span class="badge badge-ghost badge-xs">existuje</span></td>
+                  </tr>
+                  <tr class="hover:bg-primary/5">
+                    <td><input type="checkbox" class="checkbox checkbox-sm" checked /></td>
+                    <td>Palova 156</td>
+                    <td class="text-xs text-base-content/60">50.2383, 14.0923</td>
+                    <td><span class="badge badge-success badge-xs">nova</span></td>
+                  </tr>
+                  <tr class="hover:bg-primary/5">
+                    <td><input type="checkbox" class="checkbox checkbox-sm" checked /></td>
+                    <td>Palova 158</td>
+                    <td class="text-xs text-base-content/60">50.2384, 14.0924</td>
+                    <td><span class="badge badge-success badge-xs">nova</span></td>
+                  </tr>
+                  <tr class="hover:bg-primary/5">
+                    <td><input type="checkbox" class="checkbox checkbox-sm" checked /></td>
+                    <td>Palova 160</td>
+                    <td class="text-xs text-base-content/60">50.2385, 14.0925</td>
+                    <td><span class="badge badge-success badge-xs">nova</span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="card-actions mt-6">
+              <button class="btn btn-secondary gap-2 flex-1">
+                <span>📥</span>
+                Importovat vybrané (8)
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Help Section -->
+      <div class="card bg-base-200 shadow mt-8">
+        <div class="card-body">
+          <h3 class="card-title text-lg flex items-center gap-2">
+            <span>💡</span>
+            Nápověda
+          </h3>
+          <div class="grid md:grid-cols-2 gap-4 mt-4 text-sm">
+            <div>
+              <h4 class="font-semibold mb-2">Jak to funguje?</h4>
+              <p class="text-base-content/70">
+                Tento nástroj používá OpenStreetMap Overpass API k vyhledávání adres na zadané ulici.
+                Adresy se stahují včetně GPS souřadnic, takže je můžete rovnou zobrazit na mapě.
+              </p>
+            </div>
+            <div>
+              <h4 class="font-semibold mb-2">Co kdyz adresa chybi?</h4>
+              <p class="text-base-content/70">
+                Ne všechny adresy jsou v OSM. Chybějící adresy můžete přidat ručně na stránce
+                <a href="houses.html" class="link link-primary">Domy</a>, nebo přispět do OpenStreetMap.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </main>
+
+  </div>
+
+</body>
+</html>
